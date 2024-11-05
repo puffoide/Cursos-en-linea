@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <div id="alertContainer" class="position-fixed top-0 start-0 p-3" style="z-index: 1050; max-width: 300px;"></div>
+    <div id="alertContainer" class="fixed-top container p-3" style="z-index: 1050;"></div>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-deep-green">
         <div class="container">
@@ -30,7 +30,6 @@
             </button>
         </div>
     </nav>
-    <div id="alertContainer" class="position-fixed top-0 start-0 p-3" style="z-index: 1050; max-width: 300px;"></div>
     <div class="container my-5">
         <div class="row justify-content-center align-items-center g-5">
             <div class="col-md-6 d-none d-md-block">
@@ -66,6 +65,25 @@
         crossorigin="anonymous"></script>
     <!-- Custom JS -->
     <script src="./js/scripts.js"></script>
+    <script src="./js/db.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    
+            forgotPasswordForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const email = document.getElementById('email').value;
+
+                console.log(`Correo de recuperación enviado a: ${email}`);
+
+                mostrarAlerta(`Se ha enviado un correo de recuperación a ${email}.`, 'success');
+
+                forgotPasswordForm.reset();
+            });
+        });
+    </script>
+    
 </body>
 
 </html>
