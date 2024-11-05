@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coureka</title>
+
+   <!-- Reset & Normalize -->
+   <link rel="stylesheet" href="css/reset.css">
+   <link rel="stylesheet" href="css/normalize.css">
+
+   <!-- Custom CSS -->
+   <link rel="stylesheet" href="css/style.css">
+
+   <!-- Bootstrap -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="alertContainer" class="position-fixed top-0 start-0 p-3" style="z-index: 1050; max-width: 300px;"></div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-deep-green">
+        <div class="container">
+            <a class="navbar-brand" href="#">coureka !</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto" id="navbarLinks">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    
+
+    <!-- Carrusel -->
+    <section id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="./assets/img/python.png" alt="Curso de Python">
+                <div class="carousel-caption">
+                    <h5>Oferta en Cursos de Python</h5>
+                    <p>Aprende Python desde cero con un 20% de descuento. ¡Inscríbete ahora!</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="./assets/img/arte.png" alt="Curso de Arte">
+                <div class="carousel-caption">
+                    <h5>Explora tu Creatividad</h5>
+                    <p>Únete a nuestros cursos de arte y libera tu potencial artístico.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="./assets/img/cloud.png" alt="Curso de Cloud Computing">
+                <div class="carousel-caption">
+                    <h5>Domina la Computación en la Nube</h5>
+                    <p>Inscríbete en nuestros cursos de Cloud Computing y avanza en tu carrera tecnológica.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </section>
+
+    <!-- Iconos de Categorías -->
+    <section class="container my-5">
+        <h2 class="pb-5">Cursos por Categoría</h2>
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <div class="category-card" onclick="showCategory('programacion')">
+                    <img src="./assets/img/iconcode.png" alt="Programación">
+                    <p class="pt-3">Programación</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="category-card" onclick="showCategory('marketing')">
+                    <img src="./assets/img/iconmarketing.png" alt="Marketing">
+                    <p class="pt-3">Marketing</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="category-card" onclick="showCategory('ventas')">
+                    <img src="./assets/img/iconventa.png" alt="Ventas">
+                    <p class="pt-3">Ventas</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="category-card" onclick="showCategory('cloud')">
+                    <img src="./assets/img/iconcloud.png" alt="Cloud Computing">
+                    <p class="pt-3">Cloud Computing</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="category-card" onclick="showCategory('salud')">
+                    <img src="./assets/img/iconhealthcare.png" alt="Salud">
+                    <p class="pt-3">Salud</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="category-card" onclick="showCategory('ingenieria')">
+                    <img src="./assets/img/iconeng.png" alt="Ingeniería">
+                    <p class="pt-3">Ingeniería</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="category-card" onclick="showCategory('arte')">
+                    <img src="./assets/img/iconarte.png" alt="Diseño">
+                    <p class="pt-3">Diseño</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lista de Cursos Filtrada -->
+    <section class="container">
+        <!-- Categoría: Programación -->
+        <div id="programacion" class="category hidden">
+            <h3 class="mt-5">Programación</h3>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="course-card">
+                        <h4 class="course-title">Python para Principiantes</h4>
+                        <p class="course-description">Aprende a programar en Python desde cero.</p>
+                            <button class="btn btn-enroll w-100" data-curso="Python para Principiantes" onclick="inscribirCurso('Python para Principiantes', 'Aprende a programar en Python desde cero.')">Inscribirse</button>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="course-card">
+                        <h4 class="course-title">JavaScript Básico</h4>
+                        <p class="course-description">Fundamentos de JavaScript para desarrollo web.</p>
+                            <button class="btn btn-enroll w-100" data-curso="JavaScript Básico" onclick="inscribirCurso('JavaScript Básico', 'Fundamentos de JavaScript para desarrollo web.')">Inscribirse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categoría: Marketing -->
+        <div id="marketing" class="category hidden">
+            <h3 class="mt-5">Marketing</h3>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="course-card">
+                        <h4 class="course-title">Marketing Digital</h4>
+                        <p class="course-description">Conceptos y estrategias de marketing digital.</p>
+                            <button class="btn btn-enroll w-100" data-curso="Marketing Digital" onclick="inscribirCurso('Marketing Digital', 'Conceptos y estrategias de marketing digital.')">Inscribirse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categoría: Ventas -->
+        <div id="ventas" class="category hidden">
+            <h3 class="mt-5">Ventas</h3>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="course-card">
+                        <h4 class="course-title">Técnicas de Ventas</h4>
+                        <p class="course-description">Aprende técnicas avanzadas de ventas.</p>
+                            <button class="btn btn-enroll w-100" data-curso="Técnicas de Ventas" onclick="inscribirCurso('Técnicas de Ventas', 'Aprende técnicas avanzadas de ventas.')">Inscribirse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categoría: Cloud Computing -->
+        <div id="cloud" class="category hidden">
+            <h3 class="mt-5">Cloud Computing</h3>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="course-card">
+                        <h4 class="course-title">Introducción a AWS</h4>
+                        <p class="course-description">Conoce los servicios de Amazon Web Services.</p>
+                            <button class="btn btn-enroll w-100" data-curso="Introducción a AWS" onclick="inscribirCurso('Introducción a AWS', 'Conoce los servicios de Amazon Web Services.')">Inscribirse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categoría: Salud -->
+        <div id="salud" class="category hidden">
+            <h3 class="mt-5">Salud</h3>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="course-card">
+                        <h4 class="course-title">Primeros Auxilios</h4>
+                        <p class="course-description">Aprende técnicas de primeros auxilios.</p>
+                            <button class="btn btn-enroll w-100" data-curso="Primeros Auxilios" onclick="inscribirCurso('Primeros Auxilios', 'Aprende técnicas de primeros auxilios.')">Inscribirse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categoría: Ingeniería -->
+        <div id="ingenieria" class="category hidden">
+            <h3 class="mt-5">Ingeniería</h3>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="course-card">
+                        <h4 class="course-title">Ingeniería de Datos</h4>
+                        <p class="course-description">Introducción a la ingeniería de datos.</p>
+                            <button class="btn btn-enroll w-100" data-curso="Ingeniería de Datos" onclick="inscribirCurso('Ingeniería de Datos', 'Introducción a la ingeniería de datos.')">Inscribirse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categoría: Arte/Creativo -->
+        <div id="arte" class="category hidden">
+            <h3 class="mt-5">Arte/Creativo</h3>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="course-card">
+                        <h4 class="course-title">Fotografía Básica</h4>
+                        <p class="course-description">Fundamentos de fotografía y uso de cámaras.</p>
+                            <button class="btn btn-enroll w-100" data-curso="Fotografía Básica" onclick="inscribirCurso('Fotografía Básica', 'Fundamentos de fotografía y uso de cámaras.')">Inscribirse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap -->`
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <!-- Custom JS -->
+    <script src="./js/scripts.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/db.js"></script>
+</body>
+
+</html>
