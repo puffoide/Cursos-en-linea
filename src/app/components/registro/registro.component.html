@@ -1,0 +1,77 @@
+<div class="container my-5">
+    <div class="row justify-content-center align-items-center g-5">
+      <div class="col-md-6 d-none d-md-block">
+        <img src="./assets/img/learn.png" alt="Imagen de Registro" class="img-fluid rounded">
+      </div>
+      <div class="col-md-5">
+        <div class="card p-4 shadow">
+          <h2 class="text-center pb-3">Registro de Usuario</h2>
+          <form #registerForm="ngForm" (ngSubmit)="registrarUsuario()" novalidate>
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre Completo</label>
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                [(ngModel)]="formData.name"
+                name="name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                [(ngModel)]="formData.email"
+                name="email"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="username" class="form-label">Nombre de Usuario</label>
+              <input
+                type="text"
+                id="username"
+                class="form-control"
+                [(ngModel)]="formData.username"
+                name="username"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                [(ngModel)]="formData.password"
+                name="password"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                class="form-control"
+                [(ngModel)]="formData.confirmPassword"
+                name="confirmPassword"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-enroll w-100">Registrarse</button>
+          </form>
+        </div>
+        <br />
+        <div class="card p-4 shadow">
+          <span class="form-label">¿Ya tienes cuenta?
+            <a routerLink="/login">Inicia sesión</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,43 @@
+<div class="container my-5">
+    <div class="row justify-content-center align-items-center g-5">
+      <div class="col-md-6 d-none d-md-block">
+        <img src="assets/img/learn.png" alt="Imagen de Inicio de Sesión" class="img-fluid rounded" />
+      </div>
+      <div class="col-md-5">
+        <div class="card p-4 shadow">
+          <h2 class="text-center pb-3">Iniciar Sesión</h2>
+          <form (ngSubmit)="login()">
+            <div class="mb-3">
+              <label for="username" class="form-label">Nombre de Usuario o Correo</label>
+              <input
+                type="text"
+                id="username"
+                class="form-control"
+                [(ngModel)]="usernameOrEmail"
+                name="usernameOrEmail"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                [(ngModel)]="password"
+                name="password"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-enroll w-100">Ingresar</button>
+          </form>
+          <a routerLink="/recuperar-contrasena" class="d-block mt-3 text-center">¿Olvidaste tu contraseña?</a>
+        </div>
+        <br />
+        <div class="card p-4 shadow">
+          <span class="form-label">¿Eres nuevo? <a routerLink="/registro" >Regístrate</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,92 @@
+<!-- Carrusel -->
+<section id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="0"
+      class="active"
+      aria-current="true"
+      aria-label="Slide 1"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="1"
+      aria-label="Slide 2"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleIndicators"
+      data-bs-slide-to="2"
+      aria-label="Slide 3"
+    ></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="./assets/img/python.png" alt="Curso de Python" />
+      <div class="carousel-caption">
+        <h5>Oferta en Cursos de Python</h5>
+        <p>Aprende Python desde cero con un 20% de descuento. ¡Inscríbete ahora!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="./assets/img/arte.png" alt="Curso de Arte" />
+      <div class="carousel-caption">
+        <h5>Explora tu Creatividad</h5>
+        <p>Únete a nuestros cursos de arte y libera tu potencial artístico.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="./assets/img/cloud.png" alt="Curso de Cloud Computing" />
+      <div class="carousel-caption">
+        <h5>Domina la Computación en la Nube</h5>
+        <p>Inscríbete en nuestros cursos de Cloud Computing y avanza en tu carrera tecnológica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categorías -->
+<section class="container my-5">
+  <h2 class="pb-5">Cursos por Categoría</h2>
+  <div class="row text-center">
+    <div
+      class="col-md-3 mb-4"
+      *ngFor="let category of categories"
+      (click)="showCategory(category.id)"
+    >
+      <div class="category-card">
+        <img [src]="category.icon" [alt]="category.name" />
+        <p class="pt-3">{{ category.name }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lista de Cursos Filtrada -->
+<section class="container">
+  <div *ngIf="selectedCategory" [id]="selectedCategory.id">
+    <h3 class="mt-5">{{ selectedCategory.name }}</h3>
+    <div class="row">
+      <div
+        class="col-md-4 mb-4"
+        *ngFor="let course of selectedCategory.courses"
+      >
+        <div class="course-card">
+          <h4 class="course-title">{{ course.name }}</h4>
+          <p class="course-description">{{ course.description }}</p>
+            <p> {{ course.profesor }}</p>
+            <p> {{ course.precio }} </p>
+            <button
+            class="btn btn-enroll w-100"
+            [disabled]="course.isEnrolled"
+            (click)="inscribirCurso(course)"
+          >
+            {{ course.isEnrolled ? 'Inscrito' : 'Inscribirse' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
