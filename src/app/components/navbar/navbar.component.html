@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-deep-green">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">Coureka!</a>
+    <a class="navbar-brand" routerLink="/**">coureka!</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -22,7 +22,7 @@
           <a class="nav-link" routerLink="/perfil">Perfil</a>
         </li>
         <li *ngIf="isLoggedIn" class="nav-item">
-          <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
+          <a class="nav-link" routerLink="/**" (click)="logout()">Cerrar Sesión</a>
         </li>
       </ul>
     </div>

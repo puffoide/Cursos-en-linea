@@ -1,41 +1,13 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Cursos - Coureka</title>
-
-</head>
-
-<body>
-    <div id="alertContainer" class="position-fixed top-0 start-0 p-3" style="z-index: 1050; max-width: 300px;"></div>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-deep-green">
-        <div class="container">
-            <a class="navbar-brand" href="./index.html">coureka !</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto" id="navbarLinks">
-
-                </ul>
-            </div>
+<div class="container my-5">
+    <h2>Mis Cursos Inscritos</h2>
+    <div class="row">
+      <div *ngFor="let curso of cursosInscritos; let i = index" class="col-md-4 mb-4">
+        <div class="course-card">
+          <h4 class="course-title">{{ curso.nombre }}</h4>
+          <p class="course-description">{{ curso.descripcion }}</p>
+          <button class="btn btn-enroll w-100 mb-2" (click)="asistirCurso(curso)">Asistir</button>
+          <button class="btn btn-danger w-100" (click)="eliminarCurso(i)">Eliminar</button>
         </div>
-    </nav>
-
-    <div class="container my-5">
-        <h2>Mis Cursos Inscritos</h2>
-        <div class="row" id="cursosContainer">
-
-        </div>
+      </div>
     </div>
-
-    <script src="./js/db.js"></script>
-    <script src="./js/scripts.js"></script>
-    <script src="./js/mis-cursos.js"></script>
-</body>
-
-</html>
+  </div>  

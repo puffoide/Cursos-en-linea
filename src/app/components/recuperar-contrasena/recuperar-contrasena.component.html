@@ -1,57 +1,42 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperar Contraseña - Coureka</title>
-
-</head>
-
-<body>
-    <div id="alertContainer" class="position-fixed top-0 start-0 p-3" style="z-index: 1050; max-width: 300px;"></div>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-deep-green">
-        <div class="container">
-            <a class="navbar-brand" href="./index.html">coureka !</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-    <div id="alertContainer" class="position-fixed top-0 start-0 p-3" style="z-index: 1050; max-width: 300px;"></div>
-    <div class="container my-5">
-        <div class="row justify-content-center align-items-center g-5">
-            <div class="col-md-6 d-none d-md-block">
-                <img src="./assets/img/learn.png" alt="Imagen de Inicio de Sesión" class="img-fluid rounded">
+<div class="container my-5">
+    <div class="row justify-content-center align-items-center g-5">
+      <div class="col-md-6 d-none d-md-block">
+        <img src="./assets/img/learn.png" alt="Imagen de Recuperar Contraseña" class="img-fluid rounded" />
+      </div>
+      <div class="col-md-5">
+        <div class="card p-4 shadow">
+          <h2 class="text-center pb-3">Recuperar Contraseña</h2>
+          <form [formGroup]="forgotPasswordForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                formControlName="email"
+                [ngClass]="{ 'is-invalid': isFieldInvalid('email') }"
+              />
+              <div *ngIf="isFieldInvalid('email')" class="invalid-feedback">
+                Por favor, introduce un correo electrónico válido.
+              </div>
             </div>
-            <div class="col-md-5">
-                <div class="card p-4 shadow">
-                    <h2 class="text-center pb-3">Recuperar Contraseña</h2>
-                    <form id="forgotPasswordForm">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <a href="./login.html">
-                                    <button type="button" class="btn btn-danger w-20">Cancelar</button>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-enroll w-100">Enviar</button>
-                            </div>
-                        </div>
-                    </form>
-                </div><br />
-
+            <div class="row">
+              <div class="col-md-3">
+                <button
+                  type="button"
+                  class="btn btn-danger w-100"
+                  (click)="onCancel()"
+                >
+                  Cancelar
+                </button>
+              </div>
+              <div class="col">
+                <button type="submit" class="btn btn-enroll w-100">Enviar</button>
+              </div>
             </div>
+          </form>
         </div>
+      </div>
     </div>
-    <!-- Custom JS -->
-    <script src="./js/scripts.js"></script>
-</body>
-
-</html>
+  </div>
+  

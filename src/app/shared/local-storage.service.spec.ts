@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { LocalStorageService } from './local-storage.service';
 
 describe('LocalStorageService', () => {
@@ -8,77 +7,62 @@ describe('LocalStorageService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(LocalStorageService);
+
+    // Mock del localStorage
+    spyOn(window.localStorage, 'getItem').and.callFake((key: string) => mockStorage[key] || null);
+    spyOn(window.localStorage, 'setItem').and.callFake((key: string, value: string) => {
+      mockStorage[key] = value;
+    });
+    spyOn(window.localStorage, 'removeItem').and.callFake((key: string) => {
+      delete mockStorage[key];
+    });
   });
+
+  const mockStorage: { [key: string]: string } = {};
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
- // Mock de localStorage
- class MockLocalStorage {
-  private store: Record<string, string> = {};
-
-  getItem(key: string): string | null {
-    return this.store[key] || null;
-  }
-
-  setItem(key: string, value: string): void {
-    this.store[key] = value;
-  }
-
-  removeItem(key: string): void {
-    delete this.store[key];
-  }
-}
-
-beforeEach(() => {
-  TestBed.configureTestingModule({});
-  service = TestBed.inject(LocalStorageService);
-
-  // Mockear localStorage en el entorno de pruebas
-  Object.defineProperty(window, 'localStorage', {
-    value: new MockLocalStorage(),
-    writable: true,
+  it('should return null if localStorage is not available in getItem', () => {
+    spyOn(service as any, 'isLocalStorageAvailable').and.returnValue(false);
+    const result = service.getItem('testKey');
+    expect(result).toBeNull();
   });
-});
 
-it('should be created', () => {
-  expect(service).toBeTruthy();
-});
+  it('should retrieve an item from localStorage', () => {
+    mockStorage['testKey'] = JSON.stringify({ data: 'testValue' });
+    const result = service.getItem('testKey');
+    expect(result).toEqual({ data: 'testValue' });
+  });
 
-it('should store an item in localStorage', () => {
-  service.setItem('testKey', { name: 'testValue' });
-  const storedItem = JSON.parse(localStorage.getItem('testKey') || '');
-  expect(storedItem).toEqual({ name: 'testValue' });
-});
+  it('should return null for non-existent keys', () => {
+    const result = service.getItem('nonExistentKey');
+    expect(result).toBeNull();
+  });
 
-it('should retrieve an item from localStorage', () => {
-  localStorage.setItem('testKey', JSON.stringify({ name: 'testValue' }));
-  const retrievedItem = service.getItem('testKey');
-  expect(retrievedItem).toEqual({ name: 'testValue' });
-});
+  it('should save an item to localStorage', () => {
+    service.setItem('newKey', { data: 'newValue' });
+    expect(window.localStorage.setItem).toHaveBeenCalledWith('newKey', JSON.stringify({ data: 'newValue' }));
+    expect(mockStorage['newKey']).toEqual(JSON.stringify({ data: 'newValue' }));
+  });
 
-it('should return null if item does not exist in localStorage', () => {
-  const retrievedItem = service.getItem('nonExistentKey');
-  expect(retrievedItem).toBeNull();
-});
+  it('should not save an item if localStorage is not available', () => {
+    spyOn(service as any, 'isLocalStorageAvailable').and.returnValue(false);
+    service.setItem('key', { data: 'value' });
+    expect(window.localStorage.setItem).not.toHaveBeenCalled();
+  });
 
-it('should remove an item from localStorage', () => {
-  localStorage.setItem('testKey', JSON.stringify({ name: 'testValue' }));
-  service.removeItem('testKey');
-  const removedItem = localStorage.getItem('testKey');
-  expect(removedItem).toBeNull();
-});
+  it('should remove an item from localStorage', () => {
+    mockStorage['testKey'] = JSON.stringify({ data: 'testValue' });
+    service.removeItem('testKey');
+    expect(window.localStorage.removeItem).toHaveBeenCalledWith('testKey');
+    expect(mockStorage['testKey']).toBeUndefined();
+  });
 
-it('should handle multiple removals gracefully', () => {
-  localStorage.setItem('key1', JSON.stringify({ name: 'value1' }));
-  localStorage.setItem('key2', JSON.stringify({ name: 'value2' }));
-  service.removeItem('key1');
-  service.removeItem('key2');
-
-  expect(localStorage.getItem('key1')).toBeNull();
-  expect(localStorage.getItem('key2')).toBeNull();
-});
-
- 
+  it('should not remove an item if localStorage is not available', () => {
+    spyOn(service as any, 'isLocalStorageAvailable').and.returnValue(false);
+    service.removeItem('testKey');
+    expect(window.localStorage.removeItem).not.toHaveBeenCalled();
+  });
 });

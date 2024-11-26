@@ -1,62 +1,47 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil - Coureka</title>
- 
-</head>
-
-<body>
-    <div id="alertContainer" class="fixed-top container p-3" style="z-index: 1050;"></div>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-deep-green">
-        <div class="container">
-            <a class="navbar-brand" href="./index.html">coureka !</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto" id="navbarLinks">
-                </ul>
+<div class="container my-5">
+    <h2>Perfil</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre Completo</label>
+            <input type="text" id="name" class="form-control" formControlName="name"
+                [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" />
+            <div *ngIf="isFieldInvalid('name')" class="invalid-feedback">
+                Por favor, introduce tu nombre completo.
             </div>
         </div>
-    </nav>
-
-    <div class="container my-5">
-        <h2>Perfil</h2>
-        <form id="profileForm" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="name" class="form-label">Nombre Completo</label>
-                <input type="text" class="form-control" id="name" disabled required>
-                <div class="invalid-feedback">Por favor, introduce tu nombre completo.</div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" id="email" class="form-control" formControlName="email"
+                [ngClass]="{ 'is-invalid': isFieldInvalid('email') }" />
+            <div *ngIf="isFieldInvalid('email')" class="invalid-feedback">
+                Por favor, introduce un email válido.
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="email" disabled required>
-                <div class="invalid-feedback">Por favor, introduce un email válido.</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Nueva Contraseña</label>
+            <input type="password" id="password" class="form-control" formControlName="password"
+                [ngClass]="{ 'is-invalid': isFieldInvalid('password') }" />
+            <div *ngIf="isFieldInvalid('password')" class="invalid-feedback">
+                La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un
+                carácter especial.
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Nueva Contraseña</label>
-                <input type="password" class="form-control" id="password" disabled>
-                <div class="invalid-feedback">La contraseña debe tener al menos 8 caracteres, incluyendo una
-                    mayúscula, una minúscula, un número y un carácter especial.</div>
+        </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>
+            <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword"
+                [ngClass]="{ 'is-invalid': isFieldInvalid('confirmPassword') }" />
+            <div *ngIf="isFieldInvalid('confirmPassword')" class="invalid-feedback">
+                Las contraseñas no coinciden.
             </div>
-            <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>
-                <input type="password" class="form-control" id="confirmPassword" disabled>
-                <div class="invalid-feedback">Las contraseñas no coinciden.</div>
-            </div>
-            <button type="button" class="btn btn-primary" id="editButton">Editar</button>
-            <button type="submit" class="btn btn-enroll" id="saveButton" disabled>Guardar Cambios</button>
-        </form>
-    </div>
-
-    <script src="./js/db.js"></script>
-    <script src="./js/scripts.js"></script>
-    <script src="./js/perfil.js"></script>
-</body>
-
-</html>
+        </div>
+        <div class="col">
+            <button type="button" class="btn m-1" [ngClass]="isEditing ? 'btn-secondary' : 'btn-primary'"
+                (click)="toggleEditMode()">
+                {{ isEditing ? 'Cancelar' : 'Editar' }}
+            </button>
+            <button type="submit" class="btn btn-enroll">
+                Guardar Cambios
+            </button>
+        </div>
+    </form>
+</div>

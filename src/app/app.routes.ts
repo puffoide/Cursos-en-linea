@@ -6,6 +6,7 @@ import { MisCursosComponent } from './components/mis-cursos/mis-cursos.component
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/recuperar-contrasena.component';
 import { RegistroComponent } from './components/registro/registro.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 export const routes: Routes = [
     {path: 'index', component: IndexComponent},
@@ -18,7 +19,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes), SweetAlert2Module.forRoot()],
     exports: [RouterModule]
   })
   export class AppRoutingModule {}
