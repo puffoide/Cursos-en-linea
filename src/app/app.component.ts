@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { AuthService } from './services/auth.service';
 
 /**
  * Componente raíz de la aplicación.
@@ -27,4 +28,9 @@ export class AppComponent {
    * Este valor se utiliza principalmente en las vistas y puede ser dinámico.
    */
   title = 'coureka !';
+
+  constructor(private authService: AuthService) {
+    // Inicializa el superusuario
+    this.authService.initialize();
+  }
 }

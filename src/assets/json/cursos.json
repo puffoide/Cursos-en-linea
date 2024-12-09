@@ -1,0 +1,94 @@
+[
+    {
+      "id": "programacion",
+      "name": "Programación",
+      "icon": "./assets/img/iconcode.png",
+      "courses": [
+        {
+          "name": "Python para Principiantes",
+          "description": "Aprende a programar en Python desde cero.",
+          "profesor": "Prof. Laura Gómez",
+          "precio": "$15.000 CLP",
+          "isEnrolled": false
+        },
+        {
+          "name": "JavaScript Básico",
+          "description": "Fundamentos de JavaScript para desarrollo web.",
+          "profesor": "Prof. Carlos Pérez",
+          "precio": "$12.000 CLP",
+          "isEnrolled": false
+        }
+      ]
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing",
+      "icon": "./assets/img/iconmarketing.png",
+      "courses": [
+        {
+          "name": "Marketing Digital",
+          "description": "Conceptos y estrategias de marketing digital.",
+          "profesor": "Prof. María López",
+          "precio": "$10.000 CLP",
+          "isEnrolled": false
+        }
+      ]
+    },
+    {
+        "id": "ventas",
+        "name": "Ventas",
+        "icon": "./assets/img/iconventa.png",
+        "courses": [
+          {
+            "name": "Técnicas de Ventas",
+            "description": "Aprende técnicas avanzadas de ventas.",
+            "profesor": "Prof. Javier Ortega",
+            "precio": "$13.000 CLP",
+            "isEnrolled": false
+          }
+        ]
+      },
+      {
+        "id": "cloud",
+        "name": "Cloud Computing",
+        "icon": "./assets/img/iconcloud.png",
+        "courses": [
+          {
+            "name": "Introducción a AWS",
+            "description": "Conoce los servicios de Amazon Web Services.",
+            "profesor": "Prof. Javier Ortega",
+            "precio": "$10.000 CLP",
+            "isEnrolled": false
+          }
+        ]
+      },
+      {
+        "id": "ing",
+        "name": "Ingeniería",
+        "icon": "./assets/img/iconeng.png",
+        "courses": [
+          {
+            "name": "Ingeniería de Datos",
+            "description": "Introducción a la ingeniería de datos.",
+            "profesor": "Prof. Javier Ortega",
+            "precio": "$12.000 CLP",
+            "isEnrolled": false
+          }
+        ]
+      },
+      {
+        "id": "arcr",
+        "name": "Arte/Creativo",
+        "icon": "./assets/img/iconarte.png",
+        "courses": [
+          {
+            "name": "Fotografía Básica",
+            "description": "Fundamentos de fotografía y uso de cámaras.",
+            "profesor": "Prof. Javier Ortega",
+            "precio": "$13.000 CLP",
+            "isEnrolled": false
+          }
+        ]
+      }
+  ]
+  

@@ -17,7 +17,12 @@
               [ngClass]="{ 'is-invalid': isFieldInvalid('name') }"
             />
             <div *ngIf="isFieldInvalid('name')" class="invalid-feedback">
-              Nombre es obligatorio.
+              <div *ngIf="registerForm.get('name')?.errors?.['required']">
+                Nombre es obligatorio.
+              </div>
+              <div *ngIf="registerForm.get('name')?.errors?.['pattern']">
+                El nombre no puede contener números ni caracteres especiales.
+              </div>
             </div>
           </div>
 
@@ -59,8 +64,18 @@
               [ngClass]="{ 'is-invalid': isFieldInvalid('password') }"
             />
             <div *ngIf="isFieldInvalid('password')" class="invalid-feedback">
-              La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y caracteres
-              especiales.
+              <div *ngIf="registerForm.get('password')?.errors?.['required']">
+                La contraseña es obligatoria.
+              </div>
+              <div *ngIf="registerForm.get('password')?.errors?.['minlength']">
+                La contraseña debe tener al menos 8 caracteres.
+              </div>
+              <div *ngIf="registerForm.get('password')?.errors?.['maxlength']">
+                La contraseña no debe sobrepasar los 64 caracteres.
+              </div>
+              <div *ngIf="registerForm.get('password')?.errors?.['pattern']">
+                La contraseña debe incluir al menos una mayúscula, una minúscula, un número y un carácter especial.
+              </div>
             </div>
           </div>
 

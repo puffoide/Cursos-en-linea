@@ -10,7 +10,7 @@ export class LocalStorageService {
 
   getItem(key: string): any {
     if (!this.isLocalStorageAvailable()) {
-      console.warn('localStorage is not available.');
+      console.warn(`localStorage is not available. Called from getItem with key: "${key}"`);
       return null;
     }
     const item = localStorage.getItem(key);
@@ -19,7 +19,7 @@ export class LocalStorageService {
 
   setItem(key: string, value: any): void {
     if (!this.isLocalStorageAvailable()) {
-      console.warn('localStorage is not available.');
+      console.warn(`localStorage is not available. Called from setItem with key: "${key}", value:`, value);
       return;
     }
     localStorage.setItem(key, JSON.stringify(value));
@@ -27,7 +27,7 @@ export class LocalStorageService {
 
   removeItem(key: string): void {
     if (!this.isLocalStorageAvailable()) {
-      console.warn('localStorage is not available.');
+      console.warn(`localStorage is not available. Called from removeItem with key: "${key}"`);
       return;
     }
     localStorage.removeItem(key);

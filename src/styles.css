@@ -17,7 +17,9 @@ body {
 .bg-deep-green {
     background-color: #061a1c
 }
-.navbar-nav .nav-link, .navbar-brand {
+
+.navbar-nav .nav-link,
+.navbar-brand {
     color: #ffffff !important;
 }
 
@@ -57,12 +59,25 @@ body {
 }
 
 .course-card {
+    position: relative;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
 .hidden {
     display: none;
 }
@@ -80,7 +95,7 @@ body {
 .btn-enroll {
     background-color: #061a1c !important;
     color: white !important;
-    
+
 }
 
 .btn-enroll:hover {
@@ -92,29 +107,78 @@ body {
     transition: transform 0.3s;
     cursor: pointer;
 }
+
 .category-card:hover {
     transform: scale(1.05);
 }
+
 .category-card img {
     width: 80px;
     height: 80px;
     transition: transform 0.3s;
 }
+
 .category-card:hover img {
     transform: scale(1.2);
 }
+
 .hidden {
     display: none;
 }
 
 #alertContainer {
-    top: 20px; 
-    right: 20px; 
+    top: 20px;
+    right: 20px;
     width: auto;
 }
+
 .alert {
     font-size: 14px;
     padding: 10px;
     margin-bottom: 10px;
 }
 
+.add-course-card {
+    border: 2px dashed #6c757d;
+    background-color: #fff;
+    height: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-course-card:hover {
+    background-color: #e9ecef;
+}
+
+.add-course-icon {
+    font-size: 4rem;
+    color: #6c757d;
+}
+
+.admin-actions {
+    position: absolute;
+    top: -15px;
+    right: 8px;
+    z-index: 10;
+    display: flex;
+}
+
+.icon-btn {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.edit-form {
+    position:relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px;
+}

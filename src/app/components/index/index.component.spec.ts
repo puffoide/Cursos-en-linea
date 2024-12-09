@@ -49,7 +49,7 @@ describe('IndexComponent', () => {
     component.ngOnInit();
 
     const enrolledCourse = component.categories[0].courses.find(
-      (course) => course.name === 'Python para Principiantes'
+      (course: any) => course.name === 'Python para Principiantes'
     );
     expect(enrolledCourse?.isEnrolled).toBeTrue();
   });

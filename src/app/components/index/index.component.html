@@ -1,26 +1,12 @@
 <!-- Carrusel -->
 <section id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
-    <button
-      type="button"
-      data-bs-target="#carouselExampleIndicators"
-      data-bs-slide-to="0"
-      class="active"
-      aria-current="true"
-      aria-label="Slide 1"
-    ></button>
-    <button
-      type="button"
-      data-bs-target="#carouselExampleIndicators"
-      data-bs-slide-to="1"
-      aria-label="Slide 2"
-    ></button>
-    <button
-      type="button"
-      data-bs-target="#carouselExampleIndicators"
-      data-bs-slide-to="2"
-      aria-label="Slide 3"
-    ></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+      aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+      aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+      aria-label="Slide 3"></button>
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -45,21 +31,11 @@
       </div>
     </div>
   </div>
-  <button
-    class="carousel-control-prev"
-    type="button"
-    data-bs-target="#carouselExampleIndicators"
-    data-bs-slide="prev"
-  >
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Anterior</span>
   </button>
-  <button
-    class="carousel-control-next"
-    type="button"
-    data-bs-target="#carouselExampleIndicators"
-    data-bs-slide="next"
-  >
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Siguiente</span>
   </button>
@@ -69,11 +45,7 @@
 <section class="container my-5">
   <h2 class="pb-5">Cursos por Categoría</h2>
   <div class="row text-center">
-    <div
-      class="col-md-3 mb-4"
-      *ngFor="let category of categories"
-      (click)="showCategory(category.id)"
-    >
+    <div class="col-md-3 mb-4" *ngFor="let category of categories" (click)="showCategory(category.id)">
       <div class="category-card">
         <img [src]="category.icon" [alt]="category.name" />
         <p class="pt-3">{{ category.name }}</p>
@@ -87,22 +59,150 @@
   <div *ngIf="selectedCategory" [id]="selectedCategory.id">
     <h3 class="mt-5">{{ selectedCategory.name }}</h3>
     <div class="row">
-      <div
-        class="col-md-4 mb-4"
-        *ngFor="let course of selectedCategory.courses"
-      >
-        <div class="course-card">
-          <h4 class="course-title">{{ course.name }}</h4>
-          <p class="course-description">{{ course.description }}</p>
+      <div class="col-md-4 mb-4" *ngFor="let course of selectedCategory.courses; let i = index">
+        <div class="course-card position-relative">
+          <div
+            *ngIf="!(editMode.enabled && editMode.index === i) && (!addMode || i !== selectedCategory.courses.length - 1)">
+            <div *ngIf="isSuperuser()" class="admin-actions">
+              <button class="btn btn-warning btn-sm me-1" (click)="editCourse(i)">
+                <img src="./assets/img/pen.png" alt="Editar" class="icon-btn" title="Editar">
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="deleteCourse(i)">
+                <img src="./assets/img/bin.png" alt="Eliminar" class="icon-btn" title="Eliminar">
+              </button>
+            </div>
+            <h4 class="course-title">{{ course.name }}</h4>
+            <p class="course-description">{{ course.description }}</p>
             <p> {{ course.profesor }}</p>
             <p> {{ course.precio }} </p>
-            <button
-            class="btn btn-enroll w-100"
-            [disabled]="course.isEnrolled"
-            (click)="inscribirCurso(course)"
-          >
-            {{ course.isEnrolled ? 'Inscrito' : 'Inscribirse' }}
-          </button>
+            <div *ngIf="!isSuperuser()">
+              <button class="btn btn-enroll w-100 position-" [disabled]="course.isEnrolled"
+                (click)="inscribirCurso(course)">
+                {{ course.isEnrolled ? 'Inscrito' : 'Inscribirse' }}
+              </button>
+            </div>
+          </div>
+          <!-- Formulario flotante -->
+          <div *ngIf="editMode.enabled && editMode.index === i" class="edit-form">
+            <form [formGroup]="editCourseForm" (ngSubmit)="saveCourse()">
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Nombre del curso" formControlName="name"
+                  [ngClass]="{ 'is-invalid': isEditFieldInvalid('name') }" />
+                <div *ngIf="isEditFieldInvalid('name')" class="invalid-feedback">
+                  <div *ngIf="editCourseForm.get('name')?.errors?.['required']">El nombre es obligatorio.</div>
+                  <div *ngIf="editCourseForm.get('name')?.errors?.['minlength']">Debe tener al menos 5 caracteres.</div>
+                  <div *ngIf="editCourseForm.get('name')?.errors?.['maxlength']">No puede exceder los 40 caracteres.
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Descripción" formControlName="description"
+                  [ngClass]="{ 'is-invalid': isEditFieldInvalid('description') }" />
+                <div *ngIf="isEditFieldInvalid('description')" class="invalid-feedback">
+                  <div *ngIf="editCourseForm.get('description')?.errors?.['required']">La descripción es obligatoria.
+                  </div>
+                  <div *ngIf="editCourseForm.get('description')?.errors?.['minlength']">Debe tener al menos 10
+                    caracteres.</div>
+                  <div *ngIf="editCourseForm.get('description')?.errors?.['maxlength']">No puede exceder los 46
+                    caracteres.</div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Profesor" formControlName="profesor"
+                  [ngClass]="{ 'is-invalid': isEditFieldInvalid('profesor') }" />
+                <div *ngIf="isEditFieldInvalid('profesor')" class="invalid-feedback">
+                  <div *ngIf="editCourseForm.get('profesor')?.errors?.['required']">El profesor es obligatorio.</div>
+                  <div *ngIf="editCourseForm.get('profesor')?.errors?.['minlength']">Debe tener al menos 20 caracteres.
+                  </div>
+                  <div *ngIf="editCourseForm.get('profesor')?.errors?.['maxlength']">No puede exceder los 50 caracteres.
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Precio" formControlName="precio"
+                  [ngClass]="{ 'is-invalid': isEditFieldInvalid('precio') }" />
+                <div *ngIf="isEditFieldInvalid('precio')" class="invalid-feedback">
+                  <div *ngIf="editCourseForm.get('precio')?.errors?.['required']">El precio es obligatorio.</div>
+                  <div *ngIf="editCourseForm.get('precio')?.errors?.['minlength']">Debe tener al menos 10 caracteres.
+                  </div>
+                  <div *ngIf="editCourseForm.get('precio')?.errors?.['maxlength']">No puede exceder los 12 caracteres.
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button type="submit" class="btn btn-success w-100"
+                    [disabled]="editCourseForm.invalid">Guardar</button>
+                </div>
+                <div class="col">
+                  <button type="button" class="btn btn-secondary w-100" (click)="cancelEdit()">Cancelar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div *ngIf="addMode && i === selectedCategory.courses.length - 1" class="add-form">
+            <form [formGroup]="addCourseForm" (ngSubmit)="saveNewCourse()">
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Nombre del curso" formControlName="name"
+                  [ngClass]="{ 'is-invalid': isAddFieldInvalid('name') }" />
+                <div *ngIf="isAddFieldInvalid('name')" class="invalid-feedback">
+                  <div *ngIf="addCourseForm.get('name')?.errors?.['required']">El nombre es obligatorio.</div>
+                  <div *ngIf="addCourseForm.get('name')?.errors?.['minlength']">Debe tener al menos 5 caracteres.</div>
+                  <div *ngIf="addCourseForm.get('name')?.errors?.['maxlength']">No puede exceder los 40 caracteres.
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Descripción" formControlName="description"
+                  [ngClass]="{ 'is-invalid': isAddFieldInvalid('description') }" />
+                <div *ngIf="isAddFieldInvalid('description')" class="invalid-feedback">
+                  <div *ngIf="addCourseForm.get('description')?.errors?.['required']">La descripción es obligatoria.
+                  </div>
+                  <div *ngIf="addCourseForm.get('description')?.errors?.['minlength']">Debe tener al menos 10
+                    caracteres.</div>
+                  <div *ngIf="addCourseForm.get('description')?.errors?.['maxlength']">No puede exceder los 46
+                    caracteres.</div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Profesor" formControlName="profesor"
+                  [ngClass]="{ 'is-invalid': isAddFieldInvalid('profesor') }" />
+                <div *ngIf="isAddFieldInvalid('profesor')" class="invalid-feedback">
+                  <div *ngIf="addCourseForm.get('profesor')?.errors?.['required']">El profesor es obligatorio.</div>
+                  <div *ngIf="addCourseForm.get('profesor')?.errors?.['minlength']">Debe tener al menos 20 caracteres.
+                  </div>
+                  <div *ngIf="addCourseForm.get('profesor')?.errors?.['maxlength']">No puede exceder los 50 caracteres.
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <input type="text" class="form-control" placeholder="Precio" formControlName="precio"
+                  [ngClass]="{ 'is-invalid': isAddFieldInvalid('precio') }" />
+                <div *ngIf="isAddFieldInvalid('precio')" class="invalid-feedback">
+                  <div *ngIf="addCourseForm.get('precio')?.errors?.['required']">El precio es obligatorio.</div>
+                  <div *ngIf="addCourseForm.get('precio')?.errors?.['minlength']">Debe tener al menos 10 caracteres.
+                  </div>
+                  <div *ngIf="addCourseForm.get('precio')?.errors?.['maxlength']">No puede exceder los 12 caracteres.
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button type="submit" class="btn btn-success w-100"
+                    [disabled]="addCourseForm.invalid">Guardar</button>
+                </div>
+                <div class="col">
+                  <button type="button" class="btn btn-secondary w-100" (click)="cancelNewCourse()">Cancelar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4" *ngIf="isSuperuser() && !addMode">
+        <div class="course-card add-course-card text-center d-flex justify-content-center align-items-center"
+          (click)="addCourse()">
+          <span class="add-course-icon">+</span>
         </div>
       </div>
     </div>

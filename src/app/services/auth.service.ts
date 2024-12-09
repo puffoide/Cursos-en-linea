@@ -22,6 +22,25 @@ export class AuthService {
     this.loggedInSubject = new BehaviorSubject<boolean>(isLoggedIn);
   }
 
+  initialize(): void {
+    if (this.isBrowser()) {
+      this.initializeSuperuser();
+    }
+  }
+
+  /**
+   * Inicializa un super usuario.
+   */
+  private initializeSuperuser(): void {
+    if (!this.localStorageService.getItem('superuser')) {
+      this.localStorageService.setItem('superuser', {
+        username: 'admin',
+        password: 'adminadmin',
+        role: 'admin',
+      });
+    }
+  }
+
   /**
    * Verifica si la aplicación se está ejecutando en el navegador.
    * @returns {boolean} Verdadero si es navegador, falso en otro caso.
@@ -55,7 +74,11 @@ export class AuthService {
     if (!this.isBrowser()) return null;
 
     const usuarios = this.localStorageService.getItem('usuarios') || [];
-    const user = usuarios.find(
+    const superuser = this.localStorageService.getItem('superuser');
+
+    const allUsers = [...usuarios, superuser].filter(Boolean);
+
+    const user = allUsers.find(
       (u: any) =>
         (u.email === credentials.usernameOrEmail || u.username === credentials.usernameOrEmail) &&
         u.password === credentials.password

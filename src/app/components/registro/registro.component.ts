@@ -50,7 +50,13 @@ export class RegistroComponent {
   private initializeForm(): void {
     this.registerForm = this.fb.group(
       {
-        name: ['', Validators.required],
+        name: [
+          '', 
+          [
+            Validators.required,
+            Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/),
+          ],
+        ],
         email: ['', [Validators.required, Validators.email]],
         username: ['', Validators.required],
         password: [
@@ -58,10 +64,12 @@ export class RegistroComponent {
           [
             Validators.required,
             Validators.minLength(8),
-            Validators.pattern(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])/),
+            Validators.maxLength(64),
+            Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~])/),
           ],
         ],
         confirmPassword: ['', Validators.required],
+        role: ['user'],
       },
       {
         validators: this.matchPasswords('password', 'confirmPassword'),
@@ -127,7 +135,7 @@ export class RegistroComponent {
   onSubmit(): void {
     if (this.registerForm.invalid) return;
 
-    const { name, email, username, password } = this.registerForm.value;
+    const { name, email, username, password, role } = this.registerForm.value;
 
     const usuarios = this.localStorageService.getItem('usuarios') || [];
     const usuarioExistente = usuarios.find(
@@ -139,7 +147,7 @@ export class RegistroComponent {
       return;
     }
 
-    usuarios.push({ name, email, username, password });
+    usuarios.push({ name, email, username, password, role });
     this.localStorageService.setItem('usuarios', usuarios);
 
     Swal.fire({
