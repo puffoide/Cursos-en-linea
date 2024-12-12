@@ -6,7 +6,18 @@
             <input type="text" id="name" class="form-control" formControlName="name"
                 [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" />
             <div *ngIf="isFieldInvalid('name')" class="invalid-feedback">
-                Por favor, introduce tu nombre completo.
+                <div *ngIf="profileForm.get('name')?.errors?.['required']">
+                    Nombre es obligatorio.
+                  </div>
+                  <div *ngIf="profileForm.get('name')?.errors?.['minlength']">
+                    El nombre debe tener al menos 10 caracteres.
+                  </div>
+                  <div *ngIf="profileForm.get('name')?.errors?.['maxlength']">
+                    El nombre no debe sobrepasar los 150 caracteres.
+                  </div>
+                  <div *ngIf="profileForm.get('name')?.errors?.['pattern']">
+                    El nombre no puede contener números ni caracteres especiales.
+                  </div>
             </div>
         </div>
         <div class="mb-3">
@@ -14,7 +25,18 @@
             <input type="email" id="email" class="form-control" formControlName="email"
                 [ngClass]="{ 'is-invalid': isFieldInvalid('email') }" />
             <div *ngIf="isFieldInvalid('email')" class="invalid-feedback">
-                Por favor, introduce un email válido.
+              <div *ngIf="profileForm.get('email')?.errors?.['required']">
+                Correo es obligatorio.
+              </div>
+              <div *ngIf="profileForm.get('email')?.errors?.['minlength']">
+                El correo debe tener al menos 11 caracteres.
+              </div>
+              <div *ngIf="profileForm.get('email')?.errors?.['maxlength']">
+                El correo no debe sobrepasar los 150 caracteres.
+              </div>
+              <div *ngIf="profileForm.get('email')?.errors?.['email']">
+                Ingresa un correo válido.
+              </div>
             </div>
         </div>
         <div class="mb-3">
@@ -22,8 +44,15 @@
             <input type="password" id="password" class="form-control" formControlName="password"
                 [ngClass]="{ 'is-invalid': isFieldInvalid('password') }" />
             <div *ngIf="isFieldInvalid('password')" class="invalid-feedback">
-                La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un
-                carácter especial.
+                <div *ngIf="profileForm.get('password')?.errors?.['minlength']">
+                    La contraseña debe tener al menos 8 caracteres.
+                </div>
+                <div *ngIf="profileForm.get('password')?.errors?.['maxlength']">
+                    La contraseña no debe sobrepasar los 64 caracteres.
+                </div>
+                <div *ngIf="profileForm.get('password')?.errors?.['pattern']">
+                    La contraseña debe incluir al menos una mayúscula, una minúscula, un número y un carácter especial.
+                </div>
             </div>
         </div>
         <div class="mb-3">

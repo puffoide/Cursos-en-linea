@@ -20,6 +20,12 @@
               <div *ngIf="registerForm.get('name')?.errors?.['required']">
                 Nombre es obligatorio.
               </div>
+              <div *ngIf="registerForm.get('name')?.errors?.['minlength']">
+                El nombre debe tener al menos 10 caracteres.
+              </div>
+              <div *ngIf="registerForm.get('name')?.errors?.['maxlength']">
+                El nombre no debe sobrepasar los 150 caracteres.
+              </div>
               <div *ngIf="registerForm.get('name')?.errors?.['pattern']">
                 El nombre no puede contener números ni caracteres especiales.
               </div>
@@ -36,7 +42,18 @@
               [ngClass]="{ 'is-invalid': isFieldInvalid('email') }"
             />
             <div *ngIf="isFieldInvalid('email')" class="invalid-feedback">
-              Ingresa un email válido.
+              <div *ngIf="registerForm.get('email')?.errors?.['required']">
+                Correo es obligatorio.
+              </div>
+              <div *ngIf="registerForm.get('email')?.errors?.['minlength']">
+                El correo debe tener al menos 11 caracteres.
+              </div>
+              <div *ngIf="registerForm.get('email')?.errors?.['maxlength']">
+                El correo no debe sobrepasar los 150 caracteres.
+              </div>
+              <div *ngIf="registerForm.get('email')?.errors?.['email']">
+                Ingresa un correo válido.
+              </div>
             </div>
           </div>
 

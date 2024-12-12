@@ -55,10 +55,22 @@ export class RegistroComponent {
           [
             Validators.required,
             Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/),
+            Validators.minLength(10),
+            Validators.maxLength(150)
           ],
         ],
-        email: ['', [Validators.required, Validators.email]],
-        username: ['', Validators.required],
+        email: ['', [
+          Validators.required, 
+          Validators.email,
+          Validators.minLength(11),
+          Validators.maxLength(254),
+        ]],
+        username: ['', [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(50)
+        ]
+        ],
         password: [
           '',
           [

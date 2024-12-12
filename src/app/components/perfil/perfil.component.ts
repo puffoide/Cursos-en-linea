@@ -54,17 +54,28 @@ export class PerfilComponent {
     this.profileForm = this.fb.group({
       name: [
         { value: this.currentUser?.name || '', disabled: true },
-        [Validators.required],
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/),
+          Validators.minLength(10),
+          Validators.maxLength(150),
+        ],
       ],
       email: [
         { value: this.currentUser?.email || '', disabled: true },
-        [Validators.required, Validators.email],
+        [
+          Validators.required, 
+          Validators.email,
+          Validators.minLength(11),
+          Validators.maxLength(254),
+        ],
       ],
       password: [
         { value: '', disabled: true },
         [
           Validators.minLength(8),
-          Validators.pattern(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])/),
+          Validators.maxLength(64),
+          Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~])/),
         ],
       ],
       confirmPassword: [{ value: '', disabled: true }],
