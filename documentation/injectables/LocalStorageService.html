@@ -436,7 +436,7 @@ export class LocalStorageService {
 
   getItem(key: string): any {
     if (!this.isLocalStorageAvailable()) {
-      console.warn(&#x27;localStorage is not available.&#x27;);
+      console.warn(&#x60;localStorage is not available. Called from getItem with key: &quot;${key}&quot;&#x60;);
       return null;
     }
     const item &#x3D; localStorage.getItem(key);
@@ -445,7 +445,7 @@ export class LocalStorageService {
 
   setItem(key: string, value: any): void {
     if (!this.isLocalStorageAvailable()) {
-      console.warn(&#x27;localStorage is not available.&#x27;);
+      console.warn(&#x60;localStorage is not available. Called from setItem with key: &quot;${key}&quot;, value:&#x60;, value);
       return;
     }
     localStorage.setItem(key, JSON.stringify(value));
@@ -453,7 +453,7 @@ export class LocalStorageService {
 
   removeItem(key: string): void {
     if (!this.isLocalStorageAvailable()) {
-      console.warn(&#x27;localStorage is not available.&#x27;);
+      console.warn(&#x60;localStorage is not available. Called from removeItem with key: &quot;${key}&quot;&#x60;);
       return;
     }
     localStorage.removeItem(key);

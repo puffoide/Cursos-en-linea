@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { LocalStorageService } from '../../shared/local-storage.service';
+import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
 
 /**
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
  *
  * @usageNotes
  * Este componente incluye validaciones personalizadas para contraseñas y confirmación de contraseñas.
- * Al registrarse con éxito, los datos se almacenan en el localStorage y el usuario es redirigido a la página de inicio de sesión.
+ * Al registrarse con éxito, los datos se almacenan en el json y el usuario es redirigido a la página de inicio de sesión.
  */
 @Component({
   selector: 'app-registro',
@@ -33,12 +33,12 @@ export class RegistroComponent {
    *
    * @param fb - Proveedor de formularios reactivos.
    * @param router - Servicio de enrutamiento para la navegación.
-   * @param localStorageService - Servicio para interactuar con el almacenamiento local.
+   * @param userService - Servicio de usuarios registrados.
    */
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private localStorageService: LocalStorageService
+    private userService: UserService
   ) {
     this.initializeForm();
   }
@@ -118,7 +118,6 @@ export class RegistroComponent {
     return (formGroup: AbstractControl) => {
       const pass = formGroup.get(password)?.value;
       const confirmPass = formGroup.get(confirmPassword)?.value;
-
       if (pass !== confirmPass) {
         formGroup.get(confirmPassword)?.setErrors({ noMatch: true });
       } else {
@@ -142,33 +141,35 @@ export class RegistroComponent {
   /**
    * @description
    * Maneja el evento de envío del formulario.
-   * Registra un nuevo usuario si el formulario es válido y no existe ya en el localStorage.
+   * Registra un nuevo usuario si el formulario es válido.
    */
   onSubmit(): void {
     if (this.registerForm.invalid) return;
-
+  
     const { name, email, username, password, role } = this.registerForm.value;
-
-    const usuarios = this.localStorageService.getItem('usuarios') || [];
-    const usuarioExistente = usuarios.find(
-      (user: any) => user.email === email || user.username === username
-    );
-
-    if (usuarioExistente) {
-      this.showAlert('Usuario Existente', 'El usuario ya está registrado.', 'error');
-      return;
-    }
-
-    usuarios.push({ name, email, username, password, role });
-    this.localStorageService.setItem('usuarios', usuarios);
-
-    Swal.fire({
-      title: 'Registro Exitoso',
-      text: 'Ahora puedes iniciar sesión.',
-      icon: 'success',
-      confirmButtonText: 'Ir al Login',
-    }).then(() => {
-      this.router.navigate(['/login']);
+    const newUser = { name, email, username, password, role };
+  
+    this.userService.registerUser(newUser).subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Registro Exitoso',
+          text: 'Ahora puedes iniciar sesión.',
+          icon: 'success',
+          confirmButtonText: 'Ir al Login',
+        }).then(() => {
+          this.router.navigate(['/login']);
+        });
+      },
+      error: (err) => {
+        console.error(err);
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un problema con el registro. Inténtalo de nuevo.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      },
     });
   }
+  
 }

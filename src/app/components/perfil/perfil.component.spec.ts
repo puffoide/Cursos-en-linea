@@ -1,112 +1,181 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { PerfilComponent } from './perfil.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LocalStorageService } from '../../shared/local-storage.service';
+import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
+import { of, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 
 describe('PerfilComponent', () => {
   let component: PerfilComponent;
   let fixture: ComponentFixture<PerfilComponent>;
-  let localStorageServiceSpy: jasmine.SpyObj<LocalStorageService>;
+  let mockUserService: jasmine.SpyObj<UserService>;
+  let mockAuthService: jasmine.SpyObj<AuthService>;
 
   beforeEach(async () => {
-    localStorageServiceSpy = jasmine.createSpyObj('LocalStorageService', ['getItem', 'setItem']);
-
-    // Configurar el mock para devolver un usuario ficticio
-    localStorageServiceSpy.getItem.and.callFake((key: string) => {
-      if (key === 'usuarioLogueado') {
-        return { name: 'Test User', email: 'testuser@example.com', username: 'testuser' };
-      }
-      return [];
-    });
+    mockUserService = jasmine.createSpyObj('UserService', ['getUsers', 'updateUser']);
+    mockAuthService = jasmine.createSpyObj('AuthService', ['getUser']);
 
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, PerfilComponent], // Mover de declarations a imports
+      imports: [ReactiveFormsModule, PerfilComponent],
       providers: [
-        { provide: LocalStorageService, useValue: localStorageServiceSpy },
+        { provide: UserService, useValue: mockUserService },
+        { provide: AuthService, useValue: mockAuthService },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PerfilComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should initialize the form with current user data', () => {
-    expect(component.profileForm.get('name')?.value).toBe('Test User');
-    expect(component.profileForm.get('email')?.value).toBe('testuser@example.com');
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('should reset form and disable fields when edit mode is toggled off', () => {
-    component.toggleEditMode(); // Activar modo edición
-    component.profileForm.patchValue({
-      name: 'New User',
-      email: 'newuser@example.com',
+  describe('loadCurrentUser', () => {
+    it('should load current user data into the form', () => {
+      const mockLoggedInUser = { username: 'testuser', email: 'testuser@example.com' };
+      const mockUsers = [
+        { username: 'testuser', email: 'testuser@example.com', name: 'Test User' },
+      ];
+
+      mockAuthService.getUser.and.returnValue(mockLoggedInUser);
+      mockUserService.getUsers.and.returnValue(of(mockUsers));
+
+      component.ngOnInit();
+
+      expect(component.currentUser).toEqual(mockUsers[0]);
+      expect(component.profileForm.get('name')?.value).toBe('Test User');
+      expect(component.profileForm.get('email')?.value).toBe('testuser@example.com');
     });
 
-    component.toggleEditMode(); // Desactivar modo edición
+    it('should show an error if user is not found', () => {
+      spyOn(Swal, 'fire');
+      const mockLoggedInUser = { username: 'testuser', email: 'testuser@example.com' };
 
-    expect(component.profileForm.get('name')?.value).toBe('Test User');
-    expect(component.profileForm.get('email')?.value).toBe('testuser@example.com');
-    expect(component.profileForm.get('name')?.disabled).toBeTrue();
-  });
+      mockAuthService.getUser.and.returnValue(mockLoggedInUser);
+      mockUserService.getUsers.and.returnValue(of([]));
 
-  it('should update user data in localStorage on valid submit', () => {
-    const swalSpy = spyOn(Swal, 'fire');
-    
-    // Mock data
-    const mockUsuarios = [
-      { name: 'Test User', email: 'testuser@example.com', username: 'testuser', password: 'OldPassword1!' },
-      { name: 'Another User', email: 'anotheruser@example.com', username: 'anotheruser', password: 'OldPassword2!' },
-    ];
-  
-    // Configure the mock
-    localStorageServiceSpy.getItem.and.callFake((key: string) => {
-      if (key === 'usuarios') return mockUsuarios;
-      if (key === 'usuarioLogueado') return mockUsuarios[0];
-      return null;
-    });
-  
-    component.toggleEditMode(); // Activate edit mode
-    component.profileForm.patchValue({
-      name: 'Updated User',
-      email: 'updateduser@example.com',
-      password: 'NewPassword1!',
-      confirmPassword: 'NewPassword1!',
-    });
-  
-    component.onSubmit(); 
-  
-    expect(localStorageServiceSpy.setItem).toHaveBeenCalledWith(
-      'usuarios',
-      jasmine.arrayContaining([
+      component.ngOnInit();
+
+      expect(component.currentUser).toBeUndefined();
+      expect(Swal.fire).toHaveBeenCalledWith(
         jasmine.objectContaining({
-          name: 'Updated User',
-          email: 'updateduser@example.com',
-          username: 'testuser',
-          password: 'NewPassword1!',
-        }),
-      ])
-    );
-  
-    expect(localStorageServiceSpy.setItem).toHaveBeenCalledWith(
-      'usuarioLogueado',
-      jasmine.objectContaining({
+          icon: 'error',
+          title: 'Error',
+          text: 'El usuario no fue encontrado en el sistema.',
+        })
+      );
+    });
+
+    it('should show an error if user data cannot be loaded', () => {
+      spyOn(Swal, 'fire');
+
+      mockAuthService.getUser.and.returnValue({ username: 'testuser' });
+      mockUserService.getUsers.and.returnValue(throwError(() => new Error('Error')));
+
+      component.ngOnInit();
+
+      expect(Swal.fire).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo cargar el perfil del usuario.',
+        })
+      );
+    });
+  });
+
+  describe('onSubmit', () => {
+    it('should successfully update user data', () => {
+      spyOn(Swal, 'fire');
+      const mockUser = { username: 'testuser', email: 'testuser@example.com', name: 'Test User' };
+
+      mockAuthService.getUser.and.returnValue(mockUser);
+      mockUserService.updateUser.and.returnValue(of({}));
+
+      component.currentUser = mockUser;
+      component.toggleEditMode();
+      component.profileForm.patchValue({
         name: 'Updated User',
         email: 'updateduser@example.com',
-        username: 'testuser',
         password: 'NewPassword1!',
-      })
-    );
-  
-    // Verify Swal.fire was called
-    expect(swalSpy).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        icon: 'success',
-        title: 'Éxito',
-        text: 'Perfil actualizado correctamente.',
-      })
-    );
+        confirmPassword: 'NewPassword1!',
+      });
+
+      component.onSubmit();
+
+      expect(mockUserService.updateUser).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          username: 'testuser',
+          name: 'Updated User',
+          email: 'updateduser@example.com',
+          password: 'NewPassword1!',
+        })
+      );
+
+      expect(Swal.fire).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          icon: 'success',
+          title: 'Perfil actualizado',
+          text: 'Tus cambios han sido guardados exitosamente.',
+        })
+      );
+
+      expect(component.isEditing).toBeFalse();
+    });
+
+    it('should show an error if update fails', () => {
+      spyOn(Swal, 'fire');
+      const mockUser = { username: 'testuser', email: 'testuser@example.com', name: 'Test User' };
+
+      mockAuthService.getUser.and.returnValue(mockUser);
+      mockUserService.updateUser.and.returnValue(throwError(() => new Error('Error')));
+
+      component.currentUser = mockUser;
+      component.toggleEditMode();
+      component.profileForm.patchValue({
+        name: 'Updated User',
+        email: 'updateduser@example.com',
+        password: 'NewPassword1!',
+        confirmPassword: 'NewPassword1!',
+      });
+
+      component.onSubmit();
+
+      expect(Swal.fire).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo actualizar el perfil. Inténtalo nuevamente.',
+        })
+      );
+    });
+    
   });
-  
+
+  describe('toggleEditMode', () => {
+    it('should enable form fields in edit mode', () => {
+      component.toggleEditMode();
+
+      expect(component.isEditing).toBeTrue();
+      expect(component.profileForm.get('name')?.enabled).toBeTrue();
+      expect(component.profileForm.get('email')?.enabled).toBeTrue();
+    });
+
+    it('should reset form and disable fields when edit mode is toggled off', () => {
+      component.currentUser = { name: 'Test User', email: 'testuser@example.com' };
+      component.toggleEditMode(); // Activate edit mode
+      component.profileForm.patchValue({
+        name: 'Updated User',
+        email: 'updateduser@example.com',
+      });
+
+      component.toggleEditMode(); // Deactivate edit mode
+
+      expect(component.profileForm.get('name')?.value).toBe('Test User');
+      expect(component.profileForm.get('email')?.value).toBe('testuser@example.com');
+      expect(component.profileForm.get('name')?.disabled).toBeTrue();
+    });
+  });
 });

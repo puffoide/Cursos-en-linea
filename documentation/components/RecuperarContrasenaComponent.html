@@ -128,11 +128,9 @@
         <h3>Description</h3>
     </p>
     <p class="comment">
-        <ul>
-<li>Importar este componente como módulo independiente en la aplicación.</li>
-<li>Incluye validación de correo electrónico para garantizar el formato correcto.</li>
-<li>Usa <code>SweetAlert2</code> para proporcionar retroalimentación visual a los usuarios.</li>
-</ul>
+        <p>Componente para la recuperación de contraseñas.</p>
+<p>Este componente permite a los usuarios solicitar un enlace de recuperación
+de contraseña mediante su correo electrónico.</p>
 
     </p>
 
@@ -251,12 +249,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(fb: FormBuilder, router: Router, localStorageService: <a href="../injectables/LocalStorageService.html" target="_self">LocalStorageService</a>)</code>
+<code>constructor(fb: FormBuilder, router: Router, userService: <a href="../injectables/UserService.html" target="_self">UserService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:35</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:27</a></div>
                             </td>
                         </tr>
 
@@ -309,10 +307,10 @@
                                                         </td>
                                                 </tr>
                                                 <tr>
-                                                        <td>localStorageService</td>
+                                                        <td>userService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/LocalStorageService.html" target="_self" >LocalStorageService</a></code>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -320,7 +318,7 @@
                                                     </td>
                                                     
                                                         <td>
-                                                                <p>Servicio para gestionar datos en <code>localStorage</code>.</p>
+                                                                <p>Servicio para interactuar con el backend.</p>
 
                                                         </td>
                                                 </tr>
@@ -362,8 +360,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="62"
-                                    class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:62</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="54"
+                                    class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:54</a></div>
                         </td>
                     </tr>
 
@@ -437,8 +435,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="107"
-                                    class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:107</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="109"
+                                    class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:109</a></div>
                         </td>
                     </tr>
 
@@ -476,8 +474,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="71"
-                                    class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:71</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -520,7 +518,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:35</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/recuperar-contrasena/recuperar-contrasena.component.ts:27</a></div>
                         </td>
                     </tr>
 
@@ -544,7 +542,7 @@ import { CommonModule } from &#x27;@angular/common&#x27;;
 import { FormsModule, FormGroup, ReactiveFormsModule, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
 import Swal from &#x27;sweetalert2&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
-import { LocalStorageService } from &#x27;../../shared/local-storage.service&#x27;;
+import { UserService } from &#x27;../../services/user.service&#x27;;
 
 /**
  * @description
@@ -553,14 +551,6 @@ import { LocalStorageService } from &#x27;../../shared/local-storage.service&#x2
  * Este componente permite a los usuarios solicitar un enlace de recuperación
  * de contraseña mediante su correo electrónico.
  */
-
-/**
- * @usageNotes
- * - Importar este componente como módulo independiente en la aplicación.
- * - Incluye validación de correo electrónico para garantizar el formato correcto.
- * - Usa &#x60;SweetAlert2&#x60; para proporcionar retroalimentación visual a los usuarios.
- */
-
 @Component({
   selector: &#x27;app-recuperar-contrasena&#x27;,
   standalone: true,
@@ -581,12 +571,12 @@ export class RecuperarContrasenaComponent {
    * 
    * @param fb Constructor de formularios reactivos.
    * @param router Router para manejar la navegación.
-   * @param localStorageService Servicio para gestionar datos en &#x60;localStorage&#x60;.
+   * @param userService Servicio para interactuar con el backend.
    */
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private localStorageService: LocalStorageService
+    private userService: UserService
   ) {
     this.forgotPasswordForm &#x3D; this.fb.group({
       email: [&#x27;&#x27;, [Validators.required, Validators.email]],
@@ -621,24 +611,34 @@ export class RecuperarContrasenaComponent {
 
     const email &#x3D; this.forgotPasswordForm.get(&#x27;email&#x27;)?.value;
 
-    const usuarios &#x3D; this.localStorageService.getItem(&#x27;usuarios&#x27;) || [];
-    const user &#x3D; usuarios.find((u: any) &#x3D;&gt; u.email &#x3D;&#x3D;&#x3D; email);
-
-    if (user) {
-      Swal.fire({
-        icon: &#x27;success&#x27;,
-        title: &#x27;Correo enviado&#x27;,
-        text: &#x27;Se ha enviado un enlace para recuperar tu contraseña.&#x27;,
-      }).then(() &#x3D;&gt; {
-        this.router.navigate([&#x27;/login&#x27;]);
-      });
-    } else {
-      Swal.fire({
-        icon: &#x27;error&#x27;,
-        title: &#x27;Correo no encontrado&#x27;,
-        text: &#x27;El correo ingresado no está registrado.&#x27;,
-      });
-    }
+    // Validar si el correo existe en el backend
+    this.userService.getUsers().subscribe({
+      next: (users) &#x3D;&gt; {
+        const user &#x3D; users.find((u: any) &#x3D;&gt; u.email &#x3D;&#x3D;&#x3D; email);
+        if (user) {
+          Swal.fire({
+            icon: &#x27;success&#x27;,
+            title: &#x27;Correo enviado&#x27;,
+            text: &#x27;Se ha enviado un enlace para recuperar tu contraseña.&#x27;,
+          }).then(() &#x3D;&gt; {
+            this.router.navigate([&#x27;/login&#x27;]);
+          });
+        } else {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Correo no encontrado&#x27;,
+            text: &#x27;El correo ingresado no está registrado.&#x27;,
+          });
+        }
+      },
+      error: () &#x3D;&gt; {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Error&#x27;,
+          text: &#x27;No se pudo procesar la solicitud. Inténtalo más tarde.&#x27;,
+        });
+      },
+    });
   }
 
   /**
@@ -648,8 +648,7 @@ export class RecuperarContrasenaComponent {
   onCancel(): void {
     this.router.navigate([&#x27;/login&#x27;]);
   }
-}
-</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">

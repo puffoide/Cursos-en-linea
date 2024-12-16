@@ -235,8 +235,10 @@ eliminarlos o simular el acceso a ellos.</p>
                                 <a href="#eliminarCurso" >eliminarCurso</a>
                             </li>
                             <li>
-                                    <span class="modifier">Public</span>
                                 <a href="#loadCursosInscritos" >loadCursosInscritos</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                         </ul>
                     </td>
@@ -256,12 +258,12 @@ eliminarlos o simular el acceso a ellos.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(localStorageService: <a href="../injectables/LocalStorageService.html" target="_self">LocalStorageService</a>, router: Router)</code>
+<code>constructor(cursosService: <a href="../injectables/CursosService.html" target="_self">CursosService</a>, userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, router: Router)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:34</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -282,10 +284,38 @@ eliminarlos o simular el acceso a ellos.</p>
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>localStorageService</td>
+                                                        <td>cursosService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/LocalStorageService.html" target="_self" >LocalStorageService</a></code>
+                                                                        <code><a href="../injectables/CursosService.html" target="_self" >CursosService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>userService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -294,7 +324,7 @@ eliminarlos o simular el acceso a ellos.</p>
                                                     
                                                         <td>
                                                                 <ul>
-<li>Servicio para manejar el almacenamiento local.</li>
+<li>Servicio para manejar la autenticación.</li>
 </ul>
 
                                                         </td>
@@ -355,8 +385,8 @@ eliminarlos o simular el acceso a ellos.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="71"
-                                    class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:71</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="112"
+                                    class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:112</a></div>
                         </td>
                     </tr>
 
@@ -429,8 +459,8 @@ eliminarlos o simular el acceso a ellos.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="81"
-                                    class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:81</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="122"
+                                    class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:122</a></div>
                         </td>
                     </tr>
 
@@ -491,7 +521,6 @@ eliminarlos o simular el acceso a ellos.</p>
                 <td class="col-md-4">
                     <a name="loadCursosInscritos"></a>
                     <span class="name">
-                            <span class="modifier">Public</span>
                         <span ><b>loadCursosInscritos</b></span>
                         <a href="#loadCursosInscritos"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -499,16 +528,15 @@ eliminarlos o simular el acceso a ellos.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>loadCursosInscritos()</code>
+<code>loadCursosInscritos()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="54"
-                                    class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:54</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -517,6 +545,43 @@ eliminarlos o simular el acceso a ellos.</p>
                 <td class="col-md-4">
                         <div class="io-description"><p>Redirige al login si no hay un usuario logueado.</p>
 </div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="55"
+                                    class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -556,7 +621,7 @@ eliminarlos o simular el acceso a ellos.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -587,7 +652,7 @@ eliminarlos o simular el acceso a ellos.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:34</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/components/mis-cursos/mis-cursos.component.ts:37</a></div>
                         </td>
                     </tr>
 
@@ -602,8 +667,11 @@ eliminarlos o simular el acceso a ellos.</p>
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
-import { LocalStorageService } from &#x27;../../shared/local-storage.service&#x27;;
+import { AuthService } from &#x27;../../services/auth.service&#x27;;
+import { UserService } from &#x27;../../services/user.service&#x27;;
+import { CursosService } from &#x27;../../services/cursos.service&#x27;;
 import { RouterModule, Router } from &#x27;@angular/router&#x27;;
+import Swal from &#x27;sweetalert2&#x27;;
 
 /**
  * @description 
@@ -639,31 +707,69 @@ export class MisCursosComponent {
    * @description Constructor del componente.
    * Inicializa los datos del usuario logueado y los cursos inscritos.
    * 
-   * @param localStorageService {LocalStorageService} - Servicio para manejar el almacenamiento local.
+   * @param authService {authService} - Servicio para manejar la autenticación.
    * @param router {Router} - Servicio para manejar la navegación.
    */
   constructor(
-    private localStorageService: LocalStorageService,
+    private cursosService: CursosService,
+    private userService: UserService,
+    private authService: AuthService,
     private router: Router
   ) {
     this.loadCursosInscritos();
   }
 
+  ngOnInit(): void {
+    this.loadCursosInscritos();
+  } 
+
   /**
-   * @description Carga los cursos inscritos del usuario desde el almacenamiento local.
+   * @description Carga los cursos inscritos del usuario.
    * Redirige al login si no hay un usuario logueado.
    */
-  public loadCursosInscritos(): void {
-    const usuarioLogueado &#x3D; this.localStorageService.getItem(&#x27;usuarioLogueado&#x27;);
-    if (!usuarioLogueado) {
+  loadCursosInscritos(): void {
+    const loggedInUser &#x3D; this.authService.getUser(); // Obtener usuario logueado
+    if (!loggedInUser) {
       this.router.navigate([&#x27;/login&#x27;]);
       return;
     }
-
-    this.username &#x3D; usuarioLogueado.username;
-    const inscripciones &#x3D; this.localStorageService.getItem(&#x27;inscripcionesPorUsuario&#x27;) || {};
-    this.cursosInscritos &#x3D; inscripciones[this.username] || [];
+  
+    this.userService.getUsers().subscribe({
+      next: (users) &#x3D;&gt; {
+        this.username &#x3D; loggedInUser.username;
+  
+        // Obtener los cursos del backend
+        this.cursosService.getCursos().subscribe({
+          next: (categories) &#x3D;&gt; {
+            this.cursosInscritos &#x3D; [];
+            categories.forEach((category: any) &#x3D;&gt; {
+              category.courses.forEach((course: any) &#x3D;&gt; {
+                if (course.inscritos.includes(this.username)) {
+                  this.cursosInscritos.push(course);
+                }
+              });
+            });
+            console.log(&#x27;Cursos inscritos:&#x27;, this.cursosInscritos);
+          },
+          error: () &#x3D;&gt; {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Error&#x27;,
+              text: &#x27;No se pudieron cargar los cursos inscritos.&#x27;,
+            });
+          },
+        });        
+      },
+      error: () &#x3D;&gt; {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Error&#x27;,
+          text: &#x27;No se pudo cargar la información del usuario.&#x27;,
+        });
+      },
+    });
   }
+  
 
   /**
    * @description Simula la acción de asistir a un curso.
@@ -681,31 +787,75 @@ export class MisCursosComponent {
    * @param index {number} - Índice del curso a eliminar.
    */
   eliminarCurso(index: number): void {
-    this.cursosInscritos.splice(index, 1); 
-    const inscripciones &#x3D; this.localStorageService.getItem(&#x27;inscripcionesPorUsuario&#x27;) || {};
-    inscripciones[this.username] &#x3D; this.cursosInscritos; 
-    this.localStorageService.setItem(&#x27;inscripcionesPorUsuario&#x27;, inscripciones);
-
-    console.log(&#x60;Curso eliminado. Lista actualizada:&#x60;, this.cursosInscritos);
+    const user &#x3D; this.authService.getUser();
+    if (!user) {
+      this.router.navigate([&#x27;/login&#x27;]);
+      return;
+    }
+  
+    const cursoAEliminar &#x3D; this.cursosInscritos[index];
+    this.cursosInscritos.splice(index, 1);
+  
+    // Actualizar el backend
+    this.cursosService.getCursos().subscribe({
+      next: (categories) &#x3D;&gt; {
+        // Buscar y actualizar el curso correspondiente en el backend
+        categories.forEach((category: any) &#x3D;&gt; {
+          const curso &#x3D; category.courses.find((c: any) &#x3D;&gt; c.name &#x3D;&#x3D;&#x3D; cursoAEliminar.name);
+          if (curso) {
+            const userIndex &#x3D; curso.inscritos.indexOf(user.username);
+            if (userIndex !&#x3D;&#x3D; -1) {
+              curso.inscritos.splice(userIndex, 1); // Eliminar usuario del array inscritos
+            }
+          }
+        });
+  
+        // Guardar cambios en el backend
+        this.cursosService.updateCursos(categories).subscribe({
+          next: () &#x3D;&gt; {
+            Swal.fire({
+              icon: &#x27;success&#x27;,
+              title: &#x27;Curso eliminado&#x27;,
+              text: &#x60;Has eliminado el curso: ${cursoAEliminar.name}&#x60;,
+            });
+          },
+          error: () &#x3D;&gt; {
+            Swal.fire({
+              icon: &#x27;error&#x27;,
+              title: &#x27;Error&#x27;,
+              text: &#x27;No se pudo eliminar el curso. Inténtalo nuevamente.&#x27;,
+            });
+          },
+        });
+      },
+      error: () &#x3D;&gt; {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Error&#x27;,
+          text: &#x27;No se pudieron cargar los cursos.&#x27;,
+        });
+      },
+    });
   }
+  
 }
 </code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container my-5&quot;&gt;
-    &lt;h2&gt;Mis Cursos Inscritos&lt;/h2&gt;
-    &lt;div class&#x3D;&quot;row&quot;&gt;
-      &lt;div *ngFor&#x3D;&quot;let curso of cursosInscritos; let i &#x3D; index&quot; class&#x3D;&quot;col-md-4 mb-4&quot;&gt;
-        &lt;div class&#x3D;&quot;course-card&quot;&gt;
-          &lt;h4 class&#x3D;&quot;course-title&quot;&gt;{{ curso.nombre }}&lt;/h4&gt;
-          &lt;p class&#x3D;&quot;course-description&quot;&gt;{{ curso.descripcion }}&lt;/p&gt;
-          &lt;button class&#x3D;&quot;btn btn-enroll w-100 mb-2&quot; (click)&#x3D;&quot;asistirCurso(curso)&quot;&gt;Asistir&lt;/button&gt;
-          &lt;button class&#x3D;&quot;btn btn-danger w-100&quot; (click)&#x3D;&quot;eliminarCurso(i)&quot;&gt;Eliminar&lt;/button&gt;
-        &lt;/div&gt;
+  &lt;h2&gt;Mis Cursos Inscritos&lt;/h2&gt;
+  &lt;div class&#x3D;&quot;row&quot;&gt;
+    &lt;div *ngFor&#x3D;&quot;let curso of cursosInscritos; let i &#x3D; index&quot; class&#x3D;&quot;col-md-4 mb-4&quot;&gt;
+      &lt;div class&#x3D;&quot;course-card&quot;&gt;
+        &lt;h4 class&#x3D;&quot;course-title&quot;&gt;{{ curso.name }}&lt;/h4&gt;
+        &lt;p class&#x3D;&quot;course-description&quot;&gt;{{ curso.description }}&lt;/p&gt;
+        &lt;button class&#x3D;&quot;btn btn-enroll w-100 mb-2&quot; (click)&#x3D;&quot;asistirCurso(curso)&quot;&gt;Asistir&lt;/button&gt;
+        &lt;button class&#x3D;&quot;btn btn-danger w-100&quot; (click)&#x3D;&quot;eliminarCurso(i)&quot;&gt;Eliminar&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-  &lt;/div&gt;  </code></pre>
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="styleData">
@@ -740,7 +890,7 @@ export class MisCursosComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container my-5">    <h2>Mis Cursos Inscritos</h2>    <div class="row">      <div *ngFor="let curso of cursosInscritos; let i = index" class="col-md-4 mb-4">        <div class="course-card">          <h4 class="course-title">{{ curso.nombre }}</h4>          <p class="course-description">{{ curso.descripcion }}</p>          <button class="btn btn-enroll w-100 mb-2" (click)="asistirCurso(curso)">Asistir</button>          <button class="btn btn-danger w-100" (click)="eliminarCurso(i)">Eliminar</button>        </div>      </div>    </div>  </div>  </div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container my-5">  <h2>Mis Cursos Inscritos</h2>  <div class="row">    <div *ngFor="let curso of cursosInscritos; let i = index" class="col-md-4 mb-4">      <div class="course-card">        <h4 class="course-title">{{ curso.name }}</h4>        <p class="course-description">{{ curso.description }}</p>        <button class="btn btn-enroll w-100 mb-2" (click)="asistirCurso(curso)">Asistir</button>        <button class="btn btn-danger w-100" (click)="eliminarCurso(i)">Eliminar</button>      </div>    </div>  </div></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'IndexComponent', 'selector': 'app-index'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MisCursosComponent', 'selector': 'app-mis-cursos'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'RecuperarContrasenaComponent', 'selector': 'app-recuperar-contrasena'},{'name': 'RegistroComponent', 'selector': 'app-registro'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'MisCursosComponent'};

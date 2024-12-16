@@ -4,7 +4,6 @@ import { FormsModule, FormGroup, ReactiveFormsModule, FormBuilder, Validators, A
 import { CursosService } from '../../services/cursos.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { LocalStorageService } from '../../shared/local-storage.service';
 import Swal from 'sweetalert2';
 
 /**
@@ -12,7 +11,7 @@ import Swal from 'sweetalert2';
  * Componente principal de la página de inicio de la aplicación.
  * 
  * Este componente muestra categorías de cursos y permite a los usuarios autenticados inscribirse en ellos.
- * Además, sincroniza el estado de inscripción de los cursos con los datos almacenados en localStorage.
+ * 
  */
 @Component({
   selector: 'app-index',
@@ -40,13 +39,11 @@ export class IndexComponent implements OnInit {
     * 
     * @param authService Servicio para manejar la autenticación del usuario.
     * @param router Servicio para manejar la navegación entre rutas.
-    * @param localStorageService Servicio para manejar el almacenamiento local.
     * @param cursosService Servicio para gestionar las operaciones relacionadas con los cursos.
     */
   constructor(
     private authService: AuthService,
     private router: Router,
-    private localStorageService: LocalStorageService,
     private cursosService: CursosService,
     private fb: FormBuilder
   ) { }
@@ -58,7 +55,6 @@ export class IndexComponent implements OnInit {
    */
   ngOnInit(): void {
     this.loadCursos();
-    this.syncInscribedCourses();
     this.initializeForm();
   }
 
@@ -111,6 +107,7 @@ export class IndexComponent implements OnInit {
     this.cursosService.getCursos().subscribe({
       next: (data) => {
         this.categories = data;
+        this.syncInscribedCourses();
       },
       error: (err) => {
         Swal.fire({
@@ -124,28 +121,25 @@ export class IndexComponent implements OnInit {
 
   /**
    * @description
-   * Sincroniza el estado de inscripción de los cursos con los datos almacenados en localStorage.
+   * Sincroniza el estado de inscripción de los cursos.
    * 
-   * @private
+   *
    */
-  private syncInscribedCourses(): void {
+  syncInscribedCourses(): void {
     const user = this.authService.getUser();
     if (!user) return;
 
-    const inscripciones = this.localStorageService.getItem('inscripcionesPorUsuario') || {};
-
-    if (inscripciones[user.username]) {
-      const userCourses = inscripciones[user.username];
-
-      this.categories.forEach((category) => {
-        category.courses.forEach((course: any) => {
-          course.isEnrolled = userCourses.some(
-            (inscrito: any) => inscrito.nombre === course.name
-          );
-        });
-      });
-    }
+    this.cursosService.getCursos().subscribe((categories) => {
+      this.categories = categories.map((category) => ({
+        ...category,
+        courses: category.courses.map((course: any) => ({
+          ...course,
+          isEnrolled: course.inscritos.includes(user.username),
+        })),
+      }));
+    });
   }
+
 
 
   /**
@@ -163,7 +157,6 @@ export class IndexComponent implements OnInit {
   /**
    * @description
    * Permite al usuario autenticado inscribirse en un curso.
-   * Actualiza el estado de inscripción y almacena los datos en localStorage.
    * 
    * @param {any} course Curso en el que el usuario desea inscribirse.
    */
@@ -174,39 +167,34 @@ export class IndexComponent implements OnInit {
       return;
     }
 
-    if (!course.isEnrolled) {
-      course.isEnrolled = true;
+    // Verificar si ya está inscrito
+    if (!course.inscritos.includes(user.username)) {
+      course.inscritos.push(user.username);
 
-      const inscripciones = this.localStorageService.getItem('inscripcionesPorUsuario') || {};
-      if (!inscripciones[user.username]) {
-        inscripciones[user.username] = [];
-      }
-
-      const isAlreadyEnrolled = inscripciones[user.username].some(
-        (inscrito: any) => inscrito.nombre === course.name
-      );
-
-      if (!isAlreadyEnrolled) {
-        inscripciones[user.username].push({
-          nombre: course.name,
-          descripcion: course.description,
-          profesor: course.profesor,
-          precio: course.precio,
-        });
-      }
-
-      this.localStorageService.setItem('inscripcionesPorUsuario', inscripciones);
-
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Te has inscrito exitosamente",
-        text: `Curso: ${course.name}`,
-        showConfirmButton: false,
-        timer: 1500,
+      // Actualizar en el backend
+      this.cursosService.updateCursos(this.categories).subscribe({
+        next: () => {
+          course.isEnrolled = true; // Actualiza el estado visual
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: "Te has inscrito exitosamente",
+            text: `Curso: ${course.name}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        },
+        error: () => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo inscribir en el curso. Inténtalo nuevamente.',
+          });
+        },
       });
     }
   }
+
 
   /**
    * @description

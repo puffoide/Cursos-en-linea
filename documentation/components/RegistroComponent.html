@@ -131,7 +131,7 @@
         <p>Componente de Registro.
 Permite a los usuarios registrarse proporcionando un nombre, correo electrónico, nombre de usuario y contraseña.</p>
 <p>Este componente incluye validaciones personalizadas para contraseñas y confirmación de contraseñas.
-Al registrarse con éxito, los datos se almacenan en el localStorage y el usuario es redirigido a la página de inicio de sesión.</p>
+Al registrarse con éxito, los datos se almacenan en el json y el usuario es redirigido a la página de inicio de sesión.</p>
 
     </p>
 
@@ -258,7 +258,7 @@ Al registrarse con éxito, los datos se almacenan en el localStorage y el usuari
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(fb: FormBuilder, router: Router, localStorageService: <a href="../injectables/LocalStorageService.html" target="_self">LocalStorageService</a>)</code>
+<code>constructor(fb: FormBuilder, router: Router, userService: <a href="../injectables/UserService.html" target="_self">UserService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -320,10 +320,10 @@ Al registrarse con éxito, los datos se almacenan en el localStorage y el usuari
                                                         </td>
                                                 </tr>
                                                 <tr>
-                                                        <td>localStorageService</td>
+                                                        <td>userService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/LocalStorageService.html" target="_self" >LocalStorageService</a></code>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -332,7 +332,7 @@ Al registrarse con éxito, los datos se almacenan en el localStorage y el usuari
                                                     
                                                         <td>
                                                                 <ul>
-<li>Servicio para interactuar con el almacenamiento local.</li>
+<li>Servicio de usuarios registrados.</li>
 </ul>
 
                                                         </td>
@@ -416,8 +416,8 @@ Al registrarse con éxito, los datos se almacenan en el localStorage y el usuari
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="117"
-                                    class="link-to-prism">src/app/components/registro/registro.component.ts:117</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="136"
+                                    class="link-to-prism">src/app/components/registro/registro.component.ts:136</a></div>
                         </td>
                     </tr>
 
@@ -493,8 +493,8 @@ Al registrarse con éxito, los datos se almacenan en el localStorage y el usuari
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="97"
-                                    class="link-to-prism">src/app/components/registro/registro.component.ts:97</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/app/components/registro/registro.component.ts:117</a></div>
                         </td>
                     </tr>
 
@@ -588,8 +588,8 @@ Al registrarse con éxito, los datos se almacenan en el localStorage y el usuari
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="127"
-                                    class="link-to-prism">src/app/components/registro/registro.component.ts:127</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="146"
+                                    class="link-to-prism">src/app/components/registro/registro.component.ts:146</a></div>
                         </td>
                     </tr>
 
@@ -597,7 +597,7 @@ Al registrarse con éxito, los datos se almacenan en el localStorage y el usuari
             <tr>
                 <td class="col-md-4">
                         <div class="io-description"><p>Maneja el evento de envío del formulario.
-Registra un nuevo usuario si el formulario es válido y no existe ya en el localStorage.</p>
+Registra un nuevo usuario si el formulario es válido.</p>
 </div>
 
                         <div class="io-description">
@@ -628,8 +628,8 @@ Registra un nuevo usuario si el formulario es válido y no existe ya en el local
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="80"
-                                    class="link-to-prism">src/app/components/registro/registro.component.ts:80</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/app/components/registro/registro.component.ts:100</a></div>
                         </td>
                     </tr>
 
@@ -768,7 +768,7 @@ Registra un nuevo usuario si el formulario es válido y no existe ya en el local
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { FormsModule, FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractControl } from &#x27;@angular/forms&#x27;;
 import { Router, RouterModule } from &#x27;@angular/router&#x27;;
-import { LocalStorageService } from &#x27;../../shared/local-storage.service&#x27;;
+import { UserService } from &#x27;../../services/user.service&#x27;;
 import Swal from &#x27;sweetalert2&#x27;;
 
 /**
@@ -778,7 +778,7 @@ import Swal from &#x27;sweetalert2&#x27;;
  *
  * @usageNotes
  * Este componente incluye validaciones personalizadas para contraseñas y confirmación de contraseñas.
- * Al registrarse con éxito, los datos se almacenan en el localStorage y el usuario es redirigido a la página de inicio de sesión.
+ * Al registrarse con éxito, los datos se almacenan en el json y el usuario es redirigido a la página de inicio de sesión.
  */
 @Component({
   selector: &#x27;app-registro&#x27;,
@@ -799,12 +799,12 @@ export class RegistroComponent {
    *
    * @param fb - Proveedor de formularios reactivos.
    * @param router - Servicio de enrutamiento para la navegación.
-   * @param localStorageService - Servicio para interactuar con el almacenamiento local.
+   * @param userService - Servicio de usuarios registrados.
    */
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private localStorageService: LocalStorageService
+    private userService: UserService
   ) {
     this.initializeForm();
   }
@@ -816,18 +816,38 @@ export class RegistroComponent {
   private initializeForm(): void {
     this.registerForm &#x3D; this.fb.group(
       {
-        name: [&#x27;&#x27;, Validators.required],
-        email: [&#x27;&#x27;, [Validators.required, Validators.email]],
-        username: [&#x27;&#x27;, Validators.required],
+        name: [
+          &#x27;&#x27;, 
+          [
+            Validators.required,
+            Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/),
+            Validators.minLength(10),
+            Validators.maxLength(150)
+          ],
+        ],
+        email: [&#x27;&#x27;, [
+          Validators.required, 
+          Validators.email,
+          Validators.minLength(11),
+          Validators.maxLength(254),
+        ]],
+        username: [&#x27;&#x27;, [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(50)
+        ]
+        ],
         password: [
           &#x27;&#x27;,
           [
             Validators.required,
             Validators.minLength(8),
-            Validators.pattern(/(?&#x3D;.*[A-Z])(?&#x3D;.*[a-z])(?&#x3D;.*[0-9])(?&#x3D;.*[!@#$%^&amp;*(),.?&quot;:{}|&lt;&gt;])/),
+            Validators.maxLength(64),
+            Validators.pattern(/^(?&#x3D;.*[A-Z])(?&#x3D;.*[a-z])(?&#x3D;.*[0-9])(?&#x3D;.*[!@#$%^&amp;*()_+\-&#x3D;\[\]{};&#x27;:&quot;\\|,.&lt;&gt;\/?&#x60;~])/),
           ],
         ],
         confirmPassword: [&#x27;&#x27;, Validators.required],
+        role: [&#x27;user&#x27;],
       },
       {
         validators: this.matchPasswords(&#x27;password&#x27;, &#x27;confirmPassword&#x27;),
@@ -864,7 +884,6 @@ export class RegistroComponent {
     return (formGroup: AbstractControl) &#x3D;&gt; {
       const pass &#x3D; formGroup.get(password)?.value;
       const confirmPass &#x3D; formGroup.get(confirmPassword)?.value;
-
       if (pass !&#x3D;&#x3D; confirmPass) {
         formGroup.get(confirmPassword)?.setErrors({ noMatch: true });
       } else {
@@ -888,35 +907,37 @@ export class RegistroComponent {
   /**
    * @description
    * Maneja el evento de envío del formulario.
-   * Registra un nuevo usuario si el formulario es válido y no existe ya en el localStorage.
+   * Registra un nuevo usuario si el formulario es válido.
    */
   onSubmit(): void {
     if (this.registerForm.invalid) return;
-
-    const { name, email, username, password } &#x3D; this.registerForm.value;
-
-    const usuarios &#x3D; this.localStorageService.getItem(&#x27;usuarios&#x27;) || [];
-    const usuarioExistente &#x3D; usuarios.find(
-      (user: any) &#x3D;&gt; user.email &#x3D;&#x3D;&#x3D; email || user.username &#x3D;&#x3D;&#x3D; username
-    );
-
-    if (usuarioExistente) {
-      this.showAlert(&#x27;Usuario Existente&#x27;, &#x27;El usuario ya está registrado.&#x27;, &#x27;error&#x27;);
-      return;
-    }
-
-    usuarios.push({ name, email, username, password });
-    this.localStorageService.setItem(&#x27;usuarios&#x27;, usuarios);
-
-    Swal.fire({
-      title: &#x27;Registro Exitoso&#x27;,
-      text: &#x27;Ahora puedes iniciar sesión.&#x27;,
-      icon: &#x27;success&#x27;,
-      confirmButtonText: &#x27;Ir al Login&#x27;,
-    }).then(() &#x3D;&gt; {
-      this.router.navigate([&#x27;/login&#x27;]);
+  
+    const { name, email, username, password, role } &#x3D; this.registerForm.value;
+    const newUser &#x3D; { name, email, username, password, role };
+  
+    this.userService.registerUser(newUser).subscribe({
+      next: () &#x3D;&gt; {
+        Swal.fire({
+          title: &#x27;Registro Exitoso&#x27;,
+          text: &#x27;Ahora puedes iniciar sesión.&#x27;,
+          icon: &#x27;success&#x27;,
+          confirmButtonText: &#x27;Ir al Login&#x27;,
+        }).then(() &#x3D;&gt; {
+          this.router.navigate([&#x27;/login&#x27;]);
+        });
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(err);
+        Swal.fire({
+          title: &#x27;Error&#x27;,
+          text: &#x27;Hubo un problema con el registro. Inténtalo de nuevo.&#x27;,
+          icon: &#x27;error&#x27;,
+          confirmButtonText: &#x27;OK&#x27;,
+        });
+      },
     });
   }
+  
 }
 </code></pre>
     </div>
@@ -941,7 +962,18 @@ export class RegistroComponent {
               [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: isFieldInvalid(&#x27;name&#x27;) }&quot;
             /&gt;
             &lt;div *ngIf&#x3D;&quot;isFieldInvalid(&#x27;name&#x27;)&quot; class&#x3D;&quot;invalid-feedback&quot;&gt;
-              Nombre es obligatorio.
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;name&#x27;)?.errors?.[&#x27;required&#x27;]&quot;&gt;
+                Nombre es obligatorio.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;name&#x27;)?.errors?.[&#x27;minlength&#x27;]&quot;&gt;
+                El nombre debe tener al menos 10 caracteres.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;name&#x27;)?.errors?.[&#x27;maxlength&#x27;]&quot;&gt;
+                El nombre no debe sobrepasar los 150 caracteres.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;name&#x27;)?.errors?.[&#x27;pattern&#x27;]&quot;&gt;
+                El nombre no puede contener números ni caracteres especiales.
+              &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
 
@@ -955,7 +987,18 @@ export class RegistroComponent {
               [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: isFieldInvalid(&#x27;email&#x27;) }&quot;
             /&gt;
             &lt;div *ngIf&#x3D;&quot;isFieldInvalid(&#x27;email&#x27;)&quot; class&#x3D;&quot;invalid-feedback&quot;&gt;
-              Ingresa un email válido.
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;email&#x27;)?.errors?.[&#x27;required&#x27;]&quot;&gt;
+                Correo es obligatorio.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;email&#x27;)?.errors?.[&#x27;minlength&#x27;]&quot;&gt;
+                El correo debe tener al menos 11 caracteres.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;email&#x27;)?.errors?.[&#x27;maxlength&#x27;]&quot;&gt;
+                El correo no debe sobrepasar los 150 caracteres.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;email&#x27;)?.errors?.[&#x27;email&#x27;]&quot;&gt;
+                Ingresa un correo válido.
+              &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
 
@@ -983,8 +1026,18 @@ export class RegistroComponent {
               [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: isFieldInvalid(&#x27;password&#x27;) }&quot;
             /&gt;
             &lt;div *ngIf&#x3D;&quot;isFieldInvalid(&#x27;password&#x27;)&quot; class&#x3D;&quot;invalid-feedback&quot;&gt;
-              La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y caracteres
-              especiales.
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;password&#x27;)?.errors?.[&#x27;required&#x27;]&quot;&gt;
+                La contraseña es obligatoria.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;password&#x27;)?.errors?.[&#x27;minlength&#x27;]&quot;&gt;
+                La contraseña debe tener al menos 8 caracteres.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;password&#x27;)?.errors?.[&#x27;maxlength&#x27;]&quot;&gt;
+                La contraseña no debe sobrepasar los 64 caracteres.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;registerForm.get(&#x27;password&#x27;)?.errors?.[&#x27;pattern&#x27;]&quot;&gt;
+                La contraseña debe incluir al menos una mayúscula, una minúscula, un número y un carácter especial.
+              &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
 
@@ -1048,7 +1101,7 @@ export class RegistroComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container my-5">  <div class="row justify-content-center align-items-center g-5">    <div class="col-md-6 d-none d-md-block">      <img src="./assets/img/learn.png" alt="Imagen de Registro" class="img-fluid rounded" />    </div>    <div class="col-md-5">      <div class="card p-4 shadow">        <h2 class="text-center pb-3">Registro de Usuario</h2>        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>          <div class="mb-3">            <label for="name" class="form-label">Nombre Completo</label>            <input              type="text"              id="name"              class="form-control"              formControlName="name"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'name\') }"            />            <div *ngIf="isFieldInvalid(\'name\')" class="invalid-feedback">              Nombre es obligatorio.            </div>          </div>          <div class="mb-3">            <label for="email" class="form-label">Correo Electrónico</label>            <input              type="email"              id="email"              class="form-control"              formControlName="email"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'email\') }"            />            <div *ngIf="isFieldInvalid(\'email\')" class="invalid-feedback">              Ingresa un email válido.            </div>          </div>          <div class="mb-3">            <label for="username" class="form-label">Nombre de Usuario</label>            <input              type="text"              id="username"              class="form-control"              formControlName="username"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'username\') }"            />            <div *ngIf="isFieldInvalid(\'username\')" class="invalid-feedback">              Nombre de usuario es obligatorio.            </div>          </div>          <div class="mb-3">            <label for="password" class="form-label">Contraseña</label>            <input              type="password"              id="password"              class="form-control"              formControlName="password"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'password\') }"            />            <div *ngIf="isFieldInvalid(\'password\')" class="invalid-feedback">              La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y caracteres              especiales.            </div>          </div>          <div class="mb-3">            <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>            <input              type="password"              id="confirmPassword"              class="form-control"              formControlName="confirmPassword"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'confirmPassword\') }"            />            <div *ngIf="isFieldInvalid(\'confirmPassword\')" class="invalid-feedback">              Las contraseñas no coinciden.            </div>          </div>          <button type="submit" class="btn btn-enroll w-100" [disabled]="registerForm.invalid">Registrarse</button>        </form>      </div>      <br />      <div class="card p-4 shadow">        <span class="form-label">¿Ya tienes cuenta?          <a routerLink="/login">Inicia sesión</a>        </span>      </div>    </div>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container my-5">  <div class="row justify-content-center align-items-center g-5">    <div class="col-md-6 d-none d-md-block">      <img src="./assets/img/learn.png" alt="Imagen de Registro" class="img-fluid rounded" />    </div>    <div class="col-md-5">      <div class="card p-4 shadow">        <h2 class="text-center pb-3">Registro de Usuario</h2>        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>          <div class="mb-3">            <label for="name" class="form-label">Nombre Completo</label>            <input              type="text"              id="name"              class="form-control"              formControlName="name"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'name\') }"            />            <div *ngIf="isFieldInvalid(\'name\')" class="invalid-feedback">              <div *ngIf="registerForm.get(\'name\')?.errors?.[\'required\']">                Nombre es obligatorio.              </div>              <div *ngIf="registerForm.get(\'name\')?.errors?.[\'minlength\']">                El nombre debe tener al menos 10 caracteres.              </div>              <div *ngIf="registerForm.get(\'name\')?.errors?.[\'maxlength\']">                El nombre no debe sobrepasar los 150 caracteres.              </div>              <div *ngIf="registerForm.get(\'name\')?.errors?.[\'pattern\']">                El nombre no puede contener números ni caracteres especiales.              </div>            </div>          </div>          <div class="mb-3">            <label for="email" class="form-label">Correo Electrónico</label>            <input              type="email"              id="email"              class="form-control"              formControlName="email"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'email\') }"            />            <div *ngIf="isFieldInvalid(\'email\')" class="invalid-feedback">              <div *ngIf="registerForm.get(\'email\')?.errors?.[\'required\']">                Correo es obligatorio.              </div>              <div *ngIf="registerForm.get(\'email\')?.errors?.[\'minlength\']">                El correo debe tener al menos 11 caracteres.              </div>              <div *ngIf="registerForm.get(\'email\')?.errors?.[\'maxlength\']">                El correo no debe sobrepasar los 150 caracteres.              </div>              <div *ngIf="registerForm.get(\'email\')?.errors?.[\'email\']">                Ingresa un correo válido.              </div>            </div>          </div>          <div class="mb-3">            <label for="username" class="form-label">Nombre de Usuario</label>            <input              type="text"              id="username"              class="form-control"              formControlName="username"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'username\') }"            />            <div *ngIf="isFieldInvalid(\'username\')" class="invalid-feedback">              Nombre de usuario es obligatorio.            </div>          </div>          <div class="mb-3">            <label for="password" class="form-label">Contraseña</label>            <input              type="password"              id="password"              class="form-control"              formControlName="password"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'password\') }"            />            <div *ngIf="isFieldInvalid(\'password\')" class="invalid-feedback">              <div *ngIf="registerForm.get(\'password\')?.errors?.[\'required\']">                La contraseña es obligatoria.              </div>              <div *ngIf="registerForm.get(\'password\')?.errors?.[\'minlength\']">                La contraseña debe tener al menos 8 caracteres.              </div>              <div *ngIf="registerForm.get(\'password\')?.errors?.[\'maxlength\']">                La contraseña no debe sobrepasar los 64 caracteres.              </div>              <div *ngIf="registerForm.get(\'password\')?.errors?.[\'pattern\']">                La contraseña debe incluir al menos una mayúscula, una minúscula, un número y un carácter especial.              </div>            </div>          </div>          <div class="mb-3">            <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>            <input              type="password"              id="confirmPassword"              class="form-control"              formControlName="confirmPassword"              [ngClass]="{ \'is-invalid\': isFieldInvalid(\'confirmPassword\') }"            />            <div *ngIf="isFieldInvalid(\'confirmPassword\')" class="invalid-feedback">              Las contraseñas no coinciden.            </div>          </div>          <button type="submit" class="btn btn-enroll w-100" [disabled]="registerForm.invalid">Registrarse</button>        </form>      </div>      <br />      <div class="card p-4 shadow">        <span class="form-label">¿Ya tienes cuenta?          <a routerLink="/login">Inicia sesión</a>        </span>      </div>    </div>  </div></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'IndexComponent', 'selector': 'app-index'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MisCursosComponent', 'selector': 'app-mis-cursos'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'RecuperarContrasenaComponent', 'selector': 'app-recuperar-contrasena'},{'name': 'RegistroComponent', 'selector': 'app-registro'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'RegistroComponent'};

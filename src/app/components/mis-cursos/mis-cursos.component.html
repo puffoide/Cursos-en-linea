@@ -1,13 +1,13 @@
 <div class="container my-5">
-    <h2>Mis Cursos Inscritos</h2>
-    <div class="row">
-      <div *ngFor="let curso of cursosInscritos; let i = index" class="col-md-4 mb-4">
-        <div class="course-card">
-          <h4 class="course-title">{{ curso.nombre }}</h4>
-          <p class="course-description">{{ curso.descripcion }}</p>
-          <button class="btn btn-enroll w-100 mb-2" (click)="asistirCurso(curso)">Asistir</button>
-          <button class="btn btn-danger w-100" (click)="eliminarCurso(i)">Eliminar</button>
-        </div>
+  <h2>Mis Cursos Inscritos</h2>
+  <div class="row">
+    <div *ngFor="let curso of cursosInscritos; let i = index" class="col-md-4 mb-4">
+      <div class="course-card">
+        <h4 class="course-title">{{ curso.name }}</h4>
+        <p class="course-description">{{ curso.description }}</p>
+        <button class="btn btn-enroll w-100 mb-2" (click)="asistirCurso(curso)">Asistir</button>
+        <button class="btn btn-danger w-100" (click)="eliminarCurso(i)">Eliminar</button>
       </div>
     </div>
-  </div>  
+  </div>
+</div>

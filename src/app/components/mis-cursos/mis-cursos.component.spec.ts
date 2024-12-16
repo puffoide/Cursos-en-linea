@@ -1,89 +1,157 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { LocalStorageService } from '../../shared/local-storage.service';
 import { MisCursosComponent } from './mis-cursos.component';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { CursosService } from '../../services/cursos.service';
+import { Router } from '@angular/router';
+import { of, throwError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 describe('MisCursosComponent', () => {
   let component: MisCursosComponent;
   let fixture: ComponentFixture<MisCursosComponent>;
-  let localStorageServiceSpy: jasmine.SpyObj<LocalStorageService>;
-  let routerSpy: jasmine.SpyObj<Router>;
+  let mockAuthService: jasmine.SpyObj<AuthService>;
+  let mockUserService: jasmine.SpyObj<UserService>;
+  let mockCursosService: jasmine.SpyObj<CursosService>;
+  let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
-    const localStorageMock = jasmine.createSpyObj('LocalStorageService', ['getItem', 'setItem']);
-    const routerMock = jasmine.createSpyObj('Router', ['navigate']);
+    mockAuthService = jasmine.createSpyObj('AuthService', ['getUser']);
+    mockUserService = jasmine.createSpyObj('UserService', ['getUsers']);
+    mockCursosService = jasmine.createSpyObj('CursosService', ['getCursos', 'updateCursos']);
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
       imports: [MisCursosComponent],
       providers: [
-        { provide: LocalStorageService, useValue: localStorageMock },
-        { provide: Router, useValue: routerMock },
+        { provide: AuthService, useValue: mockAuthService },
+        { provide: UserService, useValue: mockUserService },
+        { provide: CursosService, useValue: mockCursosService },
+        { provide: Router, useValue: mockRouter },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MisCursosComponent);
     component = fixture.componentInstance;
-    localStorageServiceSpy = TestBed.inject(LocalStorageService) as jasmine.SpyObj<LocalStorageService>;
-    routerSpy = TestBed.inject(Router) as jasmine.SpyObj<Router>;
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should redirect to login if user is not logged in', () => {
-    localStorageServiceSpy.getItem.and.returnValue(null);
-    component.loadCursosInscritos();
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
-  });
-
-  it('should load enrolled courses for logged-in user', () => {
-    const mockUser = { username: 'testuser' };
-    const mockCourses = [
-      { nombre: 'Curso 1', descripcion: 'Desc 1', profesor: 'Prof 1', precio: '1000' },
-      { nombre: 'Curso 2', descripcion: 'Desc 2', profesor: 'Prof 2', precio: '2000' },
-    ];
-
-    localStorageServiceSpy.getItem.and.callFake((key: string) => {
-      if (key === 'usuarioLogueado') return mockUser;
-      if (key === 'inscripcionesPorUsuario') return { testuser: mockCourses };
-      return null;
+  describe('loadCursosInscritos', () => {
+    it('should redirect to login if no user is logged in', () => {
+      mockAuthService.getUser.and.returnValue(null);
+      component.loadCursosInscritos();
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
     });
 
-    component.loadCursosInscritos();
+    it('should load enrolled courses for the logged-in user', () => {
+      const mockUser = { username: 'testuser' };
+      const mockCategories = [
+        {
+          id: '1',
+          name: 'Category 1',
+          courses: [
+            { name: 'Course 1', inscritos: ['testuser'] },
+            { name: 'Course 2', inscritos: [] },
+          ],
+        },
+        {
+          id: '2',
+          name: 'Category 2',
+          courses: [{ name: 'Course 3', inscritos: ['testuser'] }],
+        },
+      ];
 
-    expect(component.cursosInscritos.length).toBe(2);
-    expect(component.cursosInscritos).toEqual(mockCourses);
-  });
+      mockAuthService.getUser.and.returnValue(mockUser);
+      mockUserService.getUsers.and.returnValue(of([]));
+      mockCursosService.getCursos.and.returnValue(of(mockCategories));
 
-  it('should log course entry on asistirCurso call', () => {
-    spyOn(console, 'log');
-    const mockCurso = { nombre: 'Curso de Prueba' };
-    component.asistirCurso(mockCurso);
+      component.loadCursosInscritos();
 
-    expect(console.log).toHaveBeenCalledWith('Ingresando al curso: Curso de Prueba');
-  });
-
-  it('should remove a course and update localStorage on eliminarCurso call', () => {
-    const mockUser = { username: 'testuser' };
-    const mockCourses = [
-      { nombre: 'Curso 1', descripcion: 'Desc 1', profesor: 'Prof 1', precio: '1000' },
-      { nombre: 'Curso 2', descripcion: 'Desc 2', profesor: 'Prof 2', precio: '2000' },
-    ];
-
-    localStorageServiceSpy.getItem.and.callFake((key: string) => {
-      if (key === 'usuarioLogueado') return mockUser;
-      if (key === 'inscripcionesPorUsuario') return { testuser: mockCourses };
-      return null;
+      expect(component.cursosInscritos.length).toBe(2);
+      expect(component.cursosInscritos).toEqual([
+        { name: 'Course 1', inscritos: ['testuser'] },
+        { name: 'Course 3', inscritos: ['testuser'] },
+      ]);
     });
 
-    component.loadCursosInscritos();
-    component.eliminarCurso(0);
+    it('should show an error if courses cannot be loaded', () => {
+      spyOn(Swal, 'fire');
+      mockAuthService.getUser.and.returnValue({ username: 'testuser' });
+      mockUserService.getUsers.and.returnValue(of([]));
+      mockCursosService.getCursos.and.returnValue(throwError(() => new Error('Error')));
 
-    expect(component.cursosInscritos.length).toBe(1);
-    expect(component.cursosInscritos[0].nombre).toBe('Curso 2');
-    expect(localStorageServiceSpy.setItem).toHaveBeenCalledWith('inscripcionesPorUsuario', {
-      testuser: [{ nombre: 'Curso 2', descripcion: 'Desc 2', profesor: 'Prof 2', precio: '2000' }],
+      component.loadCursosInscritos();
+
+      expect(Swal.fire).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudieron cargar los cursos inscritos.',
+        })
+      );
+    });
+  });  
+
+  describe('eliminarCurso', () => {
+    it('should remove a course and update the backend', () => {
+      spyOn(Swal, 'fire');
+      const mockUser = { username: 'testuser' };
+      const mockCategories = [
+        {
+          id: '1',
+          name: 'Category 1',
+          courses: [
+            { name: 'Course 1', inscritos: ['testuser'] },
+            { name: 'Course 2', inscritos: [] },
+          ],
+        },
+      ];
+
+      mockAuthService.getUser.and.returnValue(mockUser);
+      mockCursosService.getCursos.and.returnValue(of(mockCategories));
+      mockCursosService.updateCursos.and.returnValue(of({}));
+
+      component.cursosInscritos = [{ name: 'Course 1', inscritos: ['testuser'] }];
+      component.eliminarCurso(0);
+
+      expect(component.cursosInscritos.length).toBe(0);
+      expect(Swal.fire).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          icon: 'success',
+          title: 'Curso eliminado',
+          text: `Has eliminado el curso: Course 1`,
+        })
+      );
+    });
+
+    it('should show an error if course cannot be removed', () => {
+      spyOn(Swal, 'fire');
+      const mockUser = { username: 'testuser' };
+      const mockCategories = [
+        {
+          id: '1',
+          name: 'Category 1',
+          courses: [{ name: 'Course 1', inscritos: ['testuser'] }],
+        },
+      ];
+
+      mockAuthService.getUser.and.returnValue(mockUser);
+      mockCursosService.getCursos.and.returnValue(of(mockCategories));
+      mockCursosService.updateCursos.and.returnValue(throwError(() => new Error('Error')));
+
+      component.cursosInscritos = [{ name: 'Course 1', inscritos: ['testuser'] }];
+      component.eliminarCurso(0);
+
+      expect(Swal.fire).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo eliminar el curso. Inténtalo nuevamente.',
+        })
+      );
     });
   });
 });

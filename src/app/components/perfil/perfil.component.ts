@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { LocalStorageService } from '../../shared/local-storage.service';
+import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 /**
  * @description 
@@ -44,13 +45,12 @@ export class PerfilComponent {
    * Inicializa el formulario y carga los datos del usuario.
    * 
    * @param fb {FormBuilder} - Servicio para crear formularios reactivos.
-   * @param localStorageService {LocalStorageService} - Servicio para manejar el almacenamiento local.
    */
   constructor(
     private fb: FormBuilder,
-    private localStorageService: LocalStorageService
+    private userService: UserService,
+    private authService: AuthService
   ) {
-    this.loadCurrentUser();
     this.profileForm = this.fb.group({
       name: [
         { value: this.currentUser?.name || '', disabled: true },
@@ -85,6 +85,52 @@ export class PerfilComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.loadCurrentUser();
+  }
+
+  /**
+   * @description Carga el usuario logueado desde el bucket.
+   */
+  private loadCurrentUser(): void {
+    const loggedInUser = this.authService.getUser(); // Obtener el usuario actual
+    if (!loggedInUser) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se encontró un usuario logueado.',
+      });
+      return;
+    }
+    this.userService.getUsers().subscribe({
+      next: (users) => {
+        this.currentUser = users.find(
+          (user: any) =>
+            user.username === loggedInUser.username || user.email === loggedInUser.email
+        );
+
+        if (this.currentUser) {
+          this.profileForm.patchValue({
+            name: this.currentUser.name,
+            email: this.currentUser.email,
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'El usuario no fue encontrado en el sistema.',
+          });
+        }
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo cargar el perfil del usuario.',
+        });
+      },
+    });
+  }
   /**
    * @description Valida si las contraseñas coinciden.
    * 
@@ -103,13 +149,6 @@ export class PerfilComponent {
         formGroup.get(confirmPassword)?.setErrors(null);
       }
     };
-  }
-
-  /**
-   * @description Carga la información del usuario actual desde el almacenamiento local.
-   */
-  private loadCurrentUser(): void {
-    this.currentUser = this.localStorageService.getItem('usuarioLogueado');
   }
 
   /**
@@ -175,28 +214,29 @@ export class PerfilComponent {
       return;
     }
 
-    this.currentUser = {
+    const updatedUser = {
       ...this.currentUser,
       name,
       email,
       password: password || this.currentUser.password,
     };
 
-    const usuarios = this.localStorageService.getItem('usuarios') || [];
-    const usuarioIndex = usuarios.findIndex((u: any) => u.username === this.currentUser.username);
-    if (usuarioIndex !== -1) {
-      usuarios[usuarioIndex] = this.currentUser;
-      this.localStorageService.setItem('usuarios', usuarios);
-    }
-
-    this.localStorageService.setItem('usuarioLogueado', this.currentUser);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Éxito',
-      text: 'Perfil actualizado correctamente.',
+    this.userService.updateUser(updatedUser).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Perfil actualizado',
+          text: 'Tus cambios han sido guardados exitosamente.',
+        });
+        this.toggleEditMode();
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo actualizar el perfil. Inténtalo nuevamente.',
+        });
+      },
     });
-
-    this.toggleEditMode();
   }
 }

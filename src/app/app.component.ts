@@ -29,8 +29,4 @@ export class AppComponent {
    */
   title = 'coureka !';
 
-  constructor(private authService: AuthService) {
-    // Inicializa el superusuario
-    this.authService.initialize();
-  }
 }

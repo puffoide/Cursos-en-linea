@@ -73,28 +73,39 @@ export class LoginComponent {
    */
   onSubmit(): void {
     if (this.loginForm.invalid) return;
-
+  
     const { usernameOrEmail, password } = this.loginForm.value;
-
-    const user = this.authService.login({ usernameOrEmail, password });
-
-    if (user) {
-      Swal.fire({
-        title: 'Inicio de sesión exitoso.',
-        text: 'Redirigiendo...',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 3000,
-      }).then(() => {
-        this.router.navigate(['/index']);
-      });
-    } else {
-      Swal.fire({
-        title: 'Error inicio de sesión',
-        text: 'Usuario o contraseña incorrectos.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
-    }
+  
+    this.authService.login({ usernameOrEmail, password }).subscribe({
+      next: (user) => {
+        if (user) {
+          Swal.fire({
+            title: 'Inicio de sesión exitoso',
+            text: 'Redirigiendo...',
+            icon: 'success',
+            timer: 3000,
+            showConfirmButton: false,
+          }).then(() => {
+            this.router.navigate(['/index']);
+          });
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'Usuario o contraseña incorrectos',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+        }
+      },
+      error: () => {
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo completar la solicitud.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      },
+    });
   }
+  
 }

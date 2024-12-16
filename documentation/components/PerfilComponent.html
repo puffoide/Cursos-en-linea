@@ -243,6 +243,9 @@ incluyendo nombre, correo y contraseña.</p>
                                 <a href="#matchPasswords" >matchPasswords</a>
                             </li>
                             <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
                                 <a href="#onSubmit" >onSubmit</a>
                             </li>
                             <li>
@@ -270,12 +273,12 @@ incluyendo nombre, correo y contraseña.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(fb: FormBuilder, localStorageService: <a href="../injectables/LocalStorageService.html" target="_self">LocalStorageService</a>)</code>
+<code>constructor(fb: FormBuilder, userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/components/perfil/perfil.component.ts:40</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/components/perfil/perfil.component.ts:41</a></div>
                             </td>
                         </tr>
 
@@ -314,10 +317,10 @@ incluyendo nombre, correo y contraseña.</p>
                                                         </td>
                                                 </tr>
                                                 <tr>
-                                                        <td>localStorageService</td>
+                                                        <td>userService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/LocalStorageService.html" target="_self" >LocalStorageService</a></code>
+                                                                        <code><a href="../injectables/UserService.html" target="_self" >UserService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -325,10 +328,20 @@ incluyendo nombre, correo y contraseña.</p>
                                                     </td>
                                                     
                                                         <td>
-                                                                <ul>
-<li>Servicio para manejar el almacenamiento local.</li>
-</ul>
-
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
                                                         </td>
                                                 </tr>
                                         </tbody>
@@ -369,8 +382,8 @@ incluyendo nombre, correo y contraseña.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="144"
-                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:144</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="194"
+                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:194</a></div>
                         </td>
                     </tr>
 
@@ -446,8 +459,8 @@ incluyendo nombre, correo y contraseña.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="100"
-                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:100</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="95"
+                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:95</a></div>
                         </td>
                     </tr>
 
@@ -483,8 +496,8 @@ incluyendo nombre, correo y contraseña.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="84"
-                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:84</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="141"
+                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:141</a></div>
                         </td>
                     </tr>
 
@@ -560,6 +573,43 @@ incluyendo nombre, correo y contraseña.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="onSubmit"></a>
                     <span class="name">
                         <span ><b>onSubmit</b></span>
@@ -576,8 +626,8 @@ incluyendo nombre, correo y contraseña.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="153"
-                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:153</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="203"
+                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:203</a></div>
                         </td>
                     </tr>
 
@@ -617,8 +667,8 @@ incluyendo nombre, correo y contraseña.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="124"
-                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:124</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="174"
+                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:174</a></div>
                         </td>
                     </tr>
 
@@ -654,8 +704,8 @@ incluyendo nombre, correo y contraseña.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="108"
-                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:108</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="158"
+                                    class="link-to-prism">src/app/components/perfil/perfil.component.ts:158</a></div>
                         </td>
                     </tr>
 
@@ -698,7 +748,7 @@ incluyendo nombre, correo y contraseña.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/components/perfil/perfil.component.ts:40</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/components/perfil/perfil.component.ts:41</a></div>
                         </td>
                     </tr>
 
@@ -723,7 +773,7 @@ incluyendo nombre, correo y contraseña.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/perfil/perfil.component.ts:35</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/components/perfil/perfil.component.ts:36</a></div>
                         </td>
                     </tr>
 
@@ -749,7 +799,7 @@ incluyendo nombre, correo y contraseña.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/components/perfil/perfil.component.ts:30</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/components/perfil/perfil.component.ts:31</a></div>
                         </td>
                     </tr>
 
@@ -766,7 +816,8 @@ incluyendo nombre, correo y contraseña.</p>
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { FormsModule, FormGroup, ReactiveFormsModule, FormBuilder, Validators, AbstractControl } from &#x27;@angular/forms&#x27;;
 import Swal from &#x27;sweetalert2&#x27;;
-import { LocalStorageService } from &#x27;../../shared/local-storage.service&#x27;;
+import { UserService } from &#x27;../../services/user.service&#x27;;
+import { AuthService } from &#x27;../../services/auth.service&#x27;;
 
 /**
  * @description 
@@ -808,27 +859,37 @@ export class PerfilComponent {
    * Inicializa el formulario y carga los datos del usuario.
    * 
    * @param fb {FormBuilder} - Servicio para crear formularios reactivos.
-   * @param localStorageService {LocalStorageService} - Servicio para manejar el almacenamiento local.
    */
   constructor(
     private fb: FormBuilder,
-    private localStorageService: LocalStorageService
+    private userService: UserService,
+    private authService: AuthService
   ) {
-    this.loadCurrentUser();
     this.profileForm &#x3D; this.fb.group({
       name: [
         { value: this.currentUser?.name || &#x27;&#x27;, disabled: true },
-        [Validators.required],
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/),
+          Validators.minLength(10),
+          Validators.maxLength(150),
+        ],
       ],
       email: [
         { value: this.currentUser?.email || &#x27;&#x27;, disabled: true },
-        [Validators.required, Validators.email],
+        [
+          Validators.required, 
+          Validators.email,
+          Validators.minLength(11),
+          Validators.maxLength(254),
+        ],
       ],
       password: [
         { value: &#x27;&#x27;, disabled: true },
         [
           Validators.minLength(8),
-          Validators.pattern(/(?&#x3D;.*[A-Z])(?&#x3D;.*[a-z])(?&#x3D;.*[0-9])(?&#x3D;.*[!@#$%^&amp;*(),.?&quot;:{}|&lt;&gt;])/),
+          Validators.maxLength(64),
+          Validators.pattern(/^(?&#x3D;.*[A-Z])(?&#x3D;.*[a-z])(?&#x3D;.*[0-9])(?&#x3D;.*[!@#$%^&amp;*()_+\-&#x3D;\[\]{};&#x27;:&quot;\\|,.&lt;&gt;\/?&#x60;~])/),
         ],
       ],
       confirmPassword: [{ value: &#x27;&#x27;, disabled: true }],
@@ -838,6 +899,52 @@ export class PerfilComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.loadCurrentUser();
+  }
+
+  /**
+   * @description Carga el usuario logueado desde el bucket.
+   */
+  private loadCurrentUser(): void {
+    const loggedInUser &#x3D; this.authService.getUser(); // Obtener el usuario actual
+    if (!loggedInUser) {
+      Swal.fire({
+        icon: &#x27;error&#x27;,
+        title: &#x27;Error&#x27;,
+        text: &#x27;No se encontró un usuario logueado.&#x27;,
+      });
+      return;
+    }
+    this.userService.getUsers().subscribe({
+      next: (users) &#x3D;&gt; {
+        this.currentUser &#x3D; users.find(
+          (user: any) &#x3D;&gt;
+            user.username &#x3D;&#x3D;&#x3D; loggedInUser.username || user.email &#x3D;&#x3D;&#x3D; loggedInUser.email
+        );
+
+        if (this.currentUser) {
+          this.profileForm.patchValue({
+            name: this.currentUser.name,
+            email: this.currentUser.email,
+          });
+        } else {
+          Swal.fire({
+            icon: &#x27;error&#x27;,
+            title: &#x27;Error&#x27;,
+            text: &#x27;El usuario no fue encontrado en el sistema.&#x27;,
+          });
+        }
+      },
+      error: () &#x3D;&gt; {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Error&#x27;,
+          text: &#x27;No se pudo cargar el perfil del usuario.&#x27;,
+        });
+      },
+    });
+  }
   /**
    * @description Valida si las contraseñas coinciden.
    * 
@@ -856,13 +963,6 @@ export class PerfilComponent {
         formGroup.get(confirmPassword)?.setErrors(null);
       }
     };
-  }
-
-  /**
-   * @description Carga la información del usuario actual desde el almacenamiento local.
-   */
-  private loadCurrentUser(): void {
-    this.currentUser &#x3D; this.localStorageService.getItem(&#x27;usuarioLogueado&#x27;);
   }
 
   /**
@@ -928,29 +1028,30 @@ export class PerfilComponent {
       return;
     }
 
-    this.currentUser &#x3D; {
+    const updatedUser &#x3D; {
       ...this.currentUser,
       name,
       email,
       password: password || this.currentUser.password,
     };
 
-    const usuarios &#x3D; this.localStorageService.getItem(&#x27;usuarios&#x27;) || [];
-    const usuarioIndex &#x3D; usuarios.findIndex((u: any) &#x3D;&gt; u.username &#x3D;&#x3D;&#x3D; this.currentUser.username);
-    if (usuarioIndex !&#x3D;&#x3D; -1) {
-      usuarios[usuarioIndex] &#x3D; this.currentUser;
-      this.localStorageService.setItem(&#x27;usuarios&#x27;, usuarios);
-    }
-
-    this.localStorageService.setItem(&#x27;usuarioLogueado&#x27;, this.currentUser);
-
-    Swal.fire({
-      icon: &#x27;success&#x27;,
-      title: &#x27;Éxito&#x27;,
-      text: &#x27;Perfil actualizado correctamente.&#x27;,
+    this.userService.updateUser(updatedUser).subscribe({
+      next: () &#x3D;&gt; {
+        Swal.fire({
+          icon: &#x27;success&#x27;,
+          title: &#x27;Perfil actualizado&#x27;,
+          text: &#x27;Tus cambios han sido guardados exitosamente.&#x27;,
+        });
+        this.toggleEditMode();
+      },
+      error: () &#x3D;&gt; {
+        Swal.fire({
+          icon: &#x27;error&#x27;,
+          title: &#x27;Error&#x27;,
+          text: &#x27;No se pudo actualizar el perfil. Inténtalo nuevamente.&#x27;,
+        });
+      },
     });
-
-    this.toggleEditMode();
   }
 }
 </code></pre>
@@ -965,7 +1066,18 @@ export class PerfilComponent {
             &lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;name&quot; class&#x3D;&quot;form-control&quot; formControlName&#x3D;&quot;name&quot;
                 [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: isFieldInvalid(&#x27;name&#x27;) }&quot; /&gt;
             &lt;div *ngIf&#x3D;&quot;isFieldInvalid(&#x27;name&#x27;)&quot; class&#x3D;&quot;invalid-feedback&quot;&gt;
-                Por favor, introduce tu nombre completo.
+                &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;name&#x27;)?.errors?.[&#x27;required&#x27;]&quot;&gt;
+                    Nombre es obligatorio.
+                  &lt;/div&gt;
+                  &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;name&#x27;)?.errors?.[&#x27;minlength&#x27;]&quot;&gt;
+                    El nombre debe tener al menos 10 caracteres.
+                  &lt;/div&gt;
+                  &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;name&#x27;)?.errors?.[&#x27;maxlength&#x27;]&quot;&gt;
+                    El nombre no debe sobrepasar los 150 caracteres.
+                  &lt;/div&gt;
+                  &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;name&#x27;)?.errors?.[&#x27;pattern&#x27;]&quot;&gt;
+                    El nombre no puede contener números ni caracteres especiales.
+                  &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
         &lt;div class&#x3D;&quot;mb-3&quot;&gt;
@@ -973,7 +1085,18 @@ export class PerfilComponent {
             &lt;input type&#x3D;&quot;email&quot; id&#x3D;&quot;email&quot; class&#x3D;&quot;form-control&quot; formControlName&#x3D;&quot;email&quot;
                 [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: isFieldInvalid(&#x27;email&#x27;) }&quot; /&gt;
             &lt;div *ngIf&#x3D;&quot;isFieldInvalid(&#x27;email&#x27;)&quot; class&#x3D;&quot;invalid-feedback&quot;&gt;
-                Por favor, introduce un email válido.
+              &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;email&#x27;)?.errors?.[&#x27;required&#x27;]&quot;&gt;
+                Correo es obligatorio.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;email&#x27;)?.errors?.[&#x27;minlength&#x27;]&quot;&gt;
+                El correo debe tener al menos 11 caracteres.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;email&#x27;)?.errors?.[&#x27;maxlength&#x27;]&quot;&gt;
+                El correo no debe sobrepasar los 150 caracteres.
+              &lt;/div&gt;
+              &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;email&#x27;)?.errors?.[&#x27;email&#x27;]&quot;&gt;
+                Ingresa un correo válido.
+              &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
         &lt;div class&#x3D;&quot;mb-3&quot;&gt;
@@ -981,8 +1104,15 @@ export class PerfilComponent {
             &lt;input type&#x3D;&quot;password&quot; id&#x3D;&quot;password&quot; class&#x3D;&quot;form-control&quot; formControlName&#x3D;&quot;password&quot;
                 [ngClass]&#x3D;&quot;{ &#x27;is-invalid&#x27;: isFieldInvalid(&#x27;password&#x27;) }&quot; /&gt;
             &lt;div *ngIf&#x3D;&quot;isFieldInvalid(&#x27;password&#x27;)&quot; class&#x3D;&quot;invalid-feedback&quot;&gt;
-                La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un
-                carácter especial.
+                &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;password&#x27;)?.errors?.[&#x27;minlength&#x27;]&quot;&gt;
+                    La contraseña debe tener al menos 8 caracteres.
+                &lt;/div&gt;
+                &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;password&#x27;)?.errors?.[&#x27;maxlength&#x27;]&quot;&gt;
+                    La contraseña no debe sobrepasar los 64 caracteres.
+                &lt;/div&gt;
+                &lt;div *ngIf&#x3D;&quot;profileForm.get(&#x27;password&#x27;)?.errors?.[&#x27;pattern&#x27;]&quot;&gt;
+                    La contraseña debe incluir al menos una mayúscula, una minúscula, un número y un carácter especial.
+                &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
         &lt;div class&#x3D;&quot;mb-3&quot;&gt;
@@ -1038,7 +1168,7 @@ export class PerfilComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container my-5">    <h2>Perfil</h2>    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">        <div class="mb-3">            <label for="name" class="form-label">Nombre Completo</label>            <input type="text" id="name" class="form-control" formControlName="name"                [ngClass]="{ \'is-invalid\': isFieldInvalid(\'name\') }" />            <div *ngIf="isFieldInvalid(\'name\')" class="invalid-feedback">                Por favor, introduce tu nombre completo.            </div>        </div>        <div class="mb-3">            <label for="email" class="form-label">Correo Electrónico</label>            <input type="email" id="email" class="form-control" formControlName="email"                [ngClass]="{ \'is-invalid\': isFieldInvalid(\'email\') }" />            <div *ngIf="isFieldInvalid(\'email\')" class="invalid-feedback">                Por favor, introduce un email válido.            </div>        </div>        <div class="mb-3">            <label for="password" class="form-label">Nueva Contraseña</label>            <input type="password" id="password" class="form-control" formControlName="password"                [ngClass]="{ \'is-invalid\': isFieldInvalid(\'password\') }" />            <div *ngIf="isFieldInvalid(\'password\')" class="invalid-feedback">                La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un                carácter especial.            </div>        </div>        <div class="mb-3">            <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>            <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword"                [ngClass]="{ \'is-invalid\': isFieldInvalid(\'confirmPassword\') }" />            <div *ngIf="isFieldInvalid(\'confirmPassword\')" class="invalid-feedback">                Las contraseñas no coinciden.            </div>        </div>        <div class="col">            <button type="button" class="btn m-1" [ngClass]="isEditing ? \'btn-secondary\' : \'btn-primary\'"                (click)="toggleEditMode()">                {{ isEditing ? \'Cancelar\' : \'Editar\' }}            </button>            <button type="submit" class="btn btn-enroll">                Guardar Cambios            </button>        </div>    </form></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="container my-5">    <h2>Perfil</h2>    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">        <div class="mb-3">            <label for="name" class="form-label">Nombre Completo</label>            <input type="text" id="name" class="form-control" formControlName="name"                [ngClass]="{ \'is-invalid\': isFieldInvalid(\'name\') }" />            <div *ngIf="isFieldInvalid(\'name\')" class="invalid-feedback">                <div *ngIf="profileForm.get(\'name\')?.errors?.[\'required\']">                    Nombre es obligatorio.                  </div>                  <div *ngIf="profileForm.get(\'name\')?.errors?.[\'minlength\']">                    El nombre debe tener al menos 10 caracteres.                  </div>                  <div *ngIf="profileForm.get(\'name\')?.errors?.[\'maxlength\']">                    El nombre no debe sobrepasar los 150 caracteres.                  </div>                  <div *ngIf="profileForm.get(\'name\')?.errors?.[\'pattern\']">                    El nombre no puede contener números ni caracteres especiales.                  </div>            </div>        </div>        <div class="mb-3">            <label for="email" class="form-label">Correo Electrónico</label>            <input type="email" id="email" class="form-control" formControlName="email"                [ngClass]="{ \'is-invalid\': isFieldInvalid(\'email\') }" />            <div *ngIf="isFieldInvalid(\'email\')" class="invalid-feedback">              <div *ngIf="profileForm.get(\'email\')?.errors?.[\'required\']">                Correo es obligatorio.              </div>              <div *ngIf="profileForm.get(\'email\')?.errors?.[\'minlength\']">                El correo debe tener al menos 11 caracteres.              </div>              <div *ngIf="profileForm.get(\'email\')?.errors?.[\'maxlength\']">                El correo no debe sobrepasar los 150 caracteres.              </div>              <div *ngIf="profileForm.get(\'email\')?.errors?.[\'email\']">                Ingresa un correo válido.              </div>            </div>        </div>        <div class="mb-3">            <label for="password" class="form-label">Nueva Contraseña</label>            <input type="password" id="password" class="form-control" formControlName="password"                [ngClass]="{ \'is-invalid\': isFieldInvalid(\'password\') }" />            <div *ngIf="isFieldInvalid(\'password\')" class="invalid-feedback">                <div *ngIf="profileForm.get(\'password\')?.errors?.[\'minlength\']">                    La contraseña debe tener al menos 8 caracteres.                </div>                <div *ngIf="profileForm.get(\'password\')?.errors?.[\'maxlength\']">                    La contraseña no debe sobrepasar los 64 caracteres.                </div>                <div *ngIf="profileForm.get(\'password\')?.errors?.[\'pattern\']">                    La contraseña debe incluir al menos una mayúscula, una minúscula, un número y un carácter especial.                </div>            </div>        </div>        <div class="mb-3">            <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>            <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword"                [ngClass]="{ \'is-invalid\': isFieldInvalid(\'confirmPassword\') }" />            <div *ngIf="isFieldInvalid(\'confirmPassword\')" class="invalid-feedback">                Las contraseñas no coinciden.            </div>        </div>        <div class="col">            <button type="button" class="btn m-1" [ngClass]="isEditing ? \'btn-secondary\' : \'btn-primary\'"                (click)="toggleEditMode()">                {{ isEditing ? \'Cancelar\' : \'Editar\' }}            </button>            <button type="submit" class="btn btn-enroll">                Guardar Cambios            </button>        </div>    </form></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'IndexComponent', 'selector': 'app-index'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MisCursosComponent', 'selector': 'app-mis-cursos'},{'name': 'NavbarComponent', 'selector': 'app-navbar'},{'name': 'PerfilComponent', 'selector': 'app-perfil'},{'name': 'RecuperarContrasenaComponent', 'selector': 'app-recuperar-contrasena'},{'name': 'RegistroComponent', 'selector': 'app-registro'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'PerfilComponent'};

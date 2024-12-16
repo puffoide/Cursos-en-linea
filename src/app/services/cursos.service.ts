@@ -27,9 +27,11 @@ export class CursosService {
    * @description Actualiza el archivo JSON completo.
    * Utilizado para actualizar varias categorías o cursos a la vez.
    */
-  updateCursos(categories: any[]): Observable<any> {
-    return this.http.put(this.jsonUrl, categories, this.httpOptions);
-  }
+ updateCursos(categories: any[]): Observable<any> {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  return this.http.put(this.jsonUrl, categories, { headers });
+}
+
 
   /**
    * @description Agrega un nuevo curso en una categoría específica.
@@ -75,4 +77,11 @@ export class CursosService {
       })
     );
   }
+
+  inscribirCurso(categoryId: string, updatedCourse: any) {
+    const url = `/api/categorias/${categoryId}/inscribirCurso`; // Endpoint simulado
+    return this.http.put(url, updatedCourse);
+  }
+  
+
 }

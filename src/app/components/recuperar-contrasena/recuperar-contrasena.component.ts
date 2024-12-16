@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, FormGroup, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { LocalStorageService } from '../../shared/local-storage.service';
+import { UserService } from '../../services/user.service';
 
 /**
  * @description
@@ -12,14 +12,6 @@ import { LocalStorageService } from '../../shared/local-storage.service';
  * Este componente permite a los usuarios solicitar un enlace de recuperación
  * de contraseña mediante su correo electrónico.
  */
-
-/**
- * @usageNotes
- * - Importar este componente como módulo independiente en la aplicación.
- * - Incluye validación de correo electrónico para garantizar el formato correcto.
- * - Usa `SweetAlert2` para proporcionar retroalimentación visual a los usuarios.
- */
-
 @Component({
   selector: 'app-recuperar-contrasena',
   standalone: true,
@@ -40,12 +32,12 @@ export class RecuperarContrasenaComponent {
    * 
    * @param fb Constructor de formularios reactivos.
    * @param router Router para manejar la navegación.
-   * @param localStorageService Servicio para gestionar datos en `localStorage`.
+   * @param userService Servicio para interactuar con el backend.
    */
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private localStorageService: LocalStorageService
+    private userService: UserService
   ) {
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -80,24 +72,34 @@ export class RecuperarContrasenaComponent {
 
     const email = this.forgotPasswordForm.get('email')?.value;
 
-    const usuarios = this.localStorageService.getItem('usuarios') || [];
-    const user = usuarios.find((u: any) => u.email === email);
-
-    if (user) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Correo enviado',
-        text: 'Se ha enviado un enlace para recuperar tu contraseña.',
-      }).then(() => {
-        this.router.navigate(['/login']);
-      });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Correo no encontrado',
-        text: 'El correo ingresado no está registrado.',
-      });
-    }
+    // Validar si el correo existe en el backend
+    this.userService.getUsers().subscribe({
+      next: (users) => {
+        const user = users.find((u: any) => u.email === email);
+        if (user) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Correo enviado',
+            text: 'Se ha enviado un enlace para recuperar tu contraseña.',
+          }).then(() => {
+            this.router.navigate(['/login']);
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Correo no encontrado',
+            text: 'El correo ingresado no está registrado.',
+          });
+        }
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo procesar la solicitud. Inténtalo más tarde.',
+        });
+      },
+    });
   }
 
   /**

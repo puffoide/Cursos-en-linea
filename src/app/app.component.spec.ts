@@ -2,11 +2,16 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, NavbarComponent], 
+      imports: [
+        RouterTestingModule, 
+        HttpClientTestingModule, // Importa HttpClientTestingModule para las pruebas
+        NavbarComponent
+      ],
     }).compileComponents();
   });
 

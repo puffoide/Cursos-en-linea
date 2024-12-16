@@ -1,29 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing'; 
 import { IndexComponent } from './index.component';
+import { CursosService } from '../../services/cursos.service';
 import { AuthService } from '../../services/auth.service';
-import { LocalStorageService } from '../../shared/local-storage.service';
 import { Router } from '@angular/router';
+import { of, throwError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 describe('IndexComponent', () => {
   let component: IndexComponent;
   let fixture: ComponentFixture<IndexComponent>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
-  let mockLocalStorageService: jasmine.SpyObj<LocalStorageService>;
+  let mockCursosService: jasmine.SpyObj<CursosService>;
   let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
     mockAuthService = jasmine.createSpyObj('AuthService', ['getUser', 'isLoggedIn']);
-    mockLocalStorageService = jasmine.createSpyObj('LocalStorageService', ['getItem', 'setItem']);
+    mockCursosService = jasmine.createSpyObj('CursosService', ['getCursos', 'updateCursos', 'addCurso', 'editCurso', 'deleteCurso']);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      imports: [IndexComponent],
+      imports: [IndexComponent, ReactiveFormsModule, HttpClientTestingModule],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
-        { provide: LocalStorageService, useValue: mockLocalStorageService },
+        { provide: CursosService, useValue: mockCursosService },
         { provide: Router, useValue: mockRouter },
+        CursosService,
       ],
     }).compileComponents();
+
     fixture = TestBed.createComponent(IndexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -33,52 +39,23 @@ describe('IndexComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize categories correctly', () => {
-    expect(component.categories.length).toBeGreaterThan(0);
+  it('should navigate to login if user is not authenticated when enrolling a course', () => {
+    mockAuthService.getUser.and.returnValue(null);
+
+    component.inscribirCurso({ name: 'Curso Test', inscritos: [] });
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
   });
 
-  it('should sync enrolled courses on initialization', () => {
-    const mockUser = { username: 'testuser' };
-    const mockCourses = [
-      { nombre: 'Python para Principiantes', descripcion: '', profesor: '', precio: '' },
+  it('should display a selected category correctly', () => {
+    const mockCategories = [
+      { id: 'programacion', name: 'Programación', courses: [] },
+      { id: 'arte', name: 'Arte', courses: [] },
     ];
+    component.categories = mockCategories;
 
-    mockAuthService.getUser.and.returnValue(mockUser);
-    mockLocalStorageService.getItem.and.returnValue({ testuser: mockCourses });
+    component.showCategory('arte');
 
-    component.ngOnInit();
-
-    const enrolledCourse = component.categories[0].courses.find(
-      (course: any) => course.name === 'Python para Principiantes'
-    );
-    expect(enrolledCourse?.isEnrolled).toBeTrue();
-  });
-
-  it('should enroll a course and save it in localStorage', () => {
-    const mockUser = { username: 'testuser' };
-    mockAuthService.getUser.and.returnValue(mockUser);
-    mockLocalStorageService.getItem.and.returnValue({});
-
-    const courseToEnroll = component.categories[0].courses[0]; 
-    component.inscribirCurso(courseToEnroll);
-
-    expect(courseToEnroll.isEnrolled).toBeTrue();
-    expect(mockLocalStorageService.setItem).toHaveBeenCalledWith('inscripcionesPorUsuario', {
-      testuser: [
-        {
-          nombre: courseToEnroll.name,
-          descripcion: courseToEnroll.description,
-          profesor: courseToEnroll.profesor,
-          precio: courseToEnroll.precio,
-        },
-      ],
-    });
-  });
-
-  it('should select a category and display it correctly', () => {
-    const categoryId = 'programacion';
-    component.showCategory(categoryId);
-
-    expect(component.selectedCategory?.id).toBe(categoryId);
+    expect(component.selectedCategory?.id).toBe('arte');
   });
 });
